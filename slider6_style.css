@@ -1,0 +1,378 @@
+.block img {
+	width: 100%;
+	height: auto;
+}
+
+li {
+	display: inline-block;
+}
+
+.blog-post ul li {
+	display: list-item;
+}
+
+.panel-body li {
+	display: list-item;
+
+}
+
+.contact-form li {
+	display: list-item;
+}
+
+.list-unstyled li {
+	display: list-item;
+}
+
+.navbar.container .navbar-brand {
+	width:78px;
+	margin-left: 0;
+}
+
+.navbar-brand img {
+	width: 50px;
+	height: auto;
+}
+
+.media-middle img {
+	width: 100px;
+	height: auto;
+
+}
+
+
+/****Main Slider Box !****/
+.acc_slider {
+  width: 753px;
+  height: 293px;
+  background-color: #ccc;
+  margin: 20px auto;
+  overflow: hidden;
+  border: 1px solid #000;
+}
+.acc_slider:before {
+	content: " ";
+	display: block;
+	position: absolute;
+	width: 753px;
+	height: 293px;
+	background-color: #000;
+	z-index: -1;
+	-webkit-transform: rotate(-10deg);
+	-moz-transform: rotate(-10deg);
+	-ms-transform: rotate(-10deg);
+	-o-transform: rotate(-10deg);
+	transform: rotate(-3deg);
+}
+.acc_slider ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 3000px;
+  height: inherit;
+}
+.acc_slider li {
+  position: relative;
+  list-style: none;
+  float: left;  
+  padding: 0;
+  margin: 0;
+  width: 94px;
+  overflow: hidden;
+  border-right: 1px solid #000;
+}
+.acc_slider li img {
+  width: 469px;
+  margin-left: -70px;
+}
+.acc_slider li,
+.acc_slider li img {
+  height: inherit;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+.acc_slider li:last-child {
+  padding-right: 500px;
+}
+/***Texts****/
+.acc_slider li .slide_textarea ,
+.acc_slider li .slide_title {
+	color: #fff;
+	position: absolute;
+	white-space: nowrap;
+}
+.acc_slider li .slide_title {
+	top: 94px;
+	left: 190px;
+	font-size: 32px;
+}
+.acc_slider li .slide_textarea {
+	top: 150px;
+	left: 240px;
+	font-size: 24px;
+}
+/****Special Text !***/
+.acc_slider li .slide_title {
+	top: 58px;
+}
+.acc_slider li .slide_title:first-letter {
+	font-size: 63px;
+}
+.acc_slider li:nth-child(1) .slide_title:first-letter {
+	color: #b4180d;
+}
+.acc_slider li:nth-child(2) .slide_title {
+	top: 49px;
+	left:208px;
+}
+.acc_slider li:nth-child(2) .slide_title:first-letter {
+	color: #779c1a;
+}
+.acc_slider li:nth-child(3) .slide_title:first-letter {
+	color: #cdcbc9;
+}
+.acc_slider li:nth-child(4) .slide_title:first-letter {
+	color: #7328ab;
+}
+
+.acc_slider li:nth-child(5) .slide_title {
+	top: 69px;
+	left:262px;
+}
+.acc_slider li:nth-child(5) .slide_title:first-letter {
+	color: #d76b35;
+}
+.acc_slider li:nth-child(5) .slide_textarea {
+	top: 190px;
+	left: 280px;
+}
+
+.acc_slider li:nth-child(6) .slide_title {
+	top: 69px;
+	left:212px;
+}
+.acc_slider li:nth-child(6) .slide_title:first-letter {
+	color: #538bc7;
+}
+.acc_slider li:nth-child(6) .slide_textarea {
+	top: 200px;
+	left: 240px;
+}
+.acc_slider li:nth-child(7) .slide_title:first-letter {
+	color: #b97259;
+}
+.acc_slider li:nth-child(8) .slide_title:first-letter {
+	color: #f2c366;
+}
+
+/****hover***/
+.acc_slider ul:hover li {
+  width: 40px;
+}
+.acc_slider ul li:hover {
+  width: 469px;
+}
+.acc_slider ul li:hover > img {
+  margin-left: 0;
+}
+/****End of Main Slider Box !****/
+
+.panel-default {
+	margin-top: 40px;
+}
+
+
+
+/***Contact Form***/
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+form.contact-form {
+  width: 100%;
+  max-width: 380px;
+  margin: 10px auto;
+  font-size: 15.5px;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  line-height: 25.079px;
+  letter-spacing: -0.5px;
+  -webkit-transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease;
+  box-shadow: 0px 2px 10px #eee;
+}
+form.contact-form:hover {
+  box-shadow: 0px 4px 14px #dddddd, 0px 0px 6px #ffffff;
+}
+form.contact-form span {
+  text-align: center;
+  display: block;
+  color: #333;
+  padding: 19.375px 19.375px 7.75px;
+  font: inherit;
+  font-size: 25.079px;
+}
+form.contact-form ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+form.contact-form ul li {
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+form.contact-form ul li i.form-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 2%;
+  text-align: center;
+  margin: 0 0.5% 0 1%;
+  padding: 0;
+  font-size: 16.275px;
+  color: #aaa;
+}
+form.contact-form ul li input[type="text"] {
+  width: 90%;
+  background: none;
+  margin: 0;
+  padding: 10.33333385px 2%;
+  border: 0;
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  -webkit-transition: border-bottom 0.35s ease;
+  transition: border-bottom 0.35s ease;
+}
+form.contact-form ul li input[type="text"]:focus {
+  outline: none;
+  border-bottom: 3px solid #f1a6f3;
+}
+form.contact-form ul li input[type="text"]::-webkit-input-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li input[type="text"]:-moz-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li input[type="text"]::-moz-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li input[type="text"]:-ms-input-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li input[type="text"]:focus::-webkit-input-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li input[type="text"]:focus:-moz-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li input[type="text"]:focus::-moz-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li input[type="text"]:focus:-ms-input-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li textarea {
+  display: inline-block;
+  vertical-align: top;
+  width: 88%;
+  background: none;
+  padding: 10.33333385px 2%;
+  resize: none;
+  border: 0;
+  border-bottom: 3px solid rgba(0, 0, 0, 0);
+  text-align: left;
+  height: auto;
+  min-height: 133px;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  -webkit-transition: border-bottom 0.35s ease;
+  transition: border-bottom 0.35s ease;
+}
+form.contact-form ul li textarea:focus {
+  outline: none;
+  border-bottom: 3px solid #f1a6f3;
+}
+form.contact-form ul li textarea::-webkit-scrollbar {
+  width: 4px;
+}
+form.contact-form ul li textarea::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 2px;
+}
+form.contact-form ul li textarea::-webkit-input-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li textarea:-moz-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li textarea::-moz-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li textarea:-ms-input-placeholder {
+  -webkit-transition: color 0.35s ease;
+  transition: color 0.35s ease;
+  color: #cccccc;
+}
+form.contact-form ul li textarea:focus::-webkit-input-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li textarea:focus:-moz-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li textarea:focus::-moz-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li textarea:focus:-ms-input-placeholder {
+  color: #f1a6f3;
+}
+form.contact-form ul li input[type="submit"] {
+  margin: 15px auto 15px;
+  padding: 10.33333385px 19.375px;
+  border: 1px solid #d0d0d0;
+  display: inline-block;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0);
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-transition: background border 0.35s ease;
+  transition: background border 0.35s ease;
+}
+form.contact-form ul li input[type="submit"]:focus {
+  outline: none;
+  border: 1px solid #f1a6f3;
+}
+form.contact-form ul li input[type="submit"]:hover {
+  background: #eaeaea;
+  border: 1px solid #f1a6f3;
+}
+form.contact-form ul li input[type="submit"]:active {
+  background: #d0d0d0;
+}
+
+
+
+/***End of Contact Form***/
+
