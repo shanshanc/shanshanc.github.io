@@ -188,17 +188,17 @@
             <div class="row">  <!-- First row of fb thumbnails -->
               <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/diveprodon" class="thumbnail" target="_blank">
-                  <img src="http://graph.facebook.com/diveprodon/picture" class="img-circle" alt="Don" >
+                  <img src="http://graph.facebook.com/100000447240684/picture" class="img-circle" alt="Don" >
                 </a>
                </div> 
               <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/ally10512" class="thumbnail" target="_blank">
-                  <img src="http://graph.facebook.com/ally10512/picture" class="img-circle" alt="Ally Lin" >
+                  <img src="http://graph.facebook.com/1209830841/picture" class="img-circle" alt="Ally Lin" >
                 </a>
               </div>
                 <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/enzo.huang.7" class="thumbnail" target="_blank">
-                  <img src="http://graph.facebook.com/enzo.huang.7/picture" class="img-circle" alt="Enzo Huang" >
+                  <img src="http://graph.facebook.com/100000057364454/picture" class="img-circle" alt="Enzo Huang" >
                 </a>
               </div>
             </div> <!-- Close fb thumbnail tag -->
@@ -206,17 +206,17 @@
             <div class="row">  <!-- Second row of fb thumbnails -->
               <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/yuwei.hsu.106" class="thumbnail" target="_blank">
-                  <img src="https://graph.facebook.com/yuwei.hsu.106/picture" class="img-circle" alt="Yuwei Hsu" >
+                  <img src="https://graph.facebook.com/883320461/picture" class="img-circle" alt="Yuwei Hsu" >
                 </a>
                </div> 
               <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/ygutyy" class="thumbnail" target="_blank">
-                  <img src="https://graph.facebook.com/ygutyy/picture" class="img-circle" alt="阿誌" >
+                  <img src="https://graph.facebook.com/100000265383900/picture" class="img-circle" alt="阿誌" >
                 </a>
               </div>
                 <div class="col-xs-3 col-md-1">
                 <a href="https://www.facebook.com/energy7839" class="thumbnail" target="_blank">
-                  <img src="https://graph.facebook.com/energy7839/picture" class="img-circle" alt="Hsiao Wu" >
+                  <img src="https://graph.facebook.com/100000231064992/picture" class="img-circle" alt="Hsiao Wu" >
                 </a>
               </div>
             </div> <!-- Close fb thumbnail tag -->
@@ -248,7 +248,8 @@
             </li>
     <li>
       <i class="fa fa-at form-icon"></i>
-      <input type="text" placeholder=" Email" />
+      <input type="text" placeholder=" Email" id="email"/>
+      <div id="feedback"></div>
     </li>
     <li>
       <i class="fa fa-university form-icon"></i>
@@ -264,7 +265,8 @@
     </li>
     <li>
       <i class="fa fa-envelope form-icon"></i>
-      <textarea placeholder=" Message" rows="2"></textarea>
+      <textarea placeholder=" Message (Max 140 Characters)" rows="2" id="message"></textarea>
+      <div id="charactersLeft">140 characters</div>
     </li>
     <li>
       <input type="submit" placeholder=" Submit" />
@@ -298,6 +300,7 @@
 
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="js/eventHandler.js"></script>
 
 </body>
 
