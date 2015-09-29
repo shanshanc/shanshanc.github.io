@@ -376,3 +376,21 @@ form.contact-form ul li input[type="submit"]:active {
 
 /***End of Contact Form***/
 
+/** sticky navigation**/
+.is-sticky #topNav {
+  background-color: #e7e7e7;
+  opacity: 1;
+  z-index: 1000;
+
+}
+
+/** arrow for class flow **/
+
+
+.arrow {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+
