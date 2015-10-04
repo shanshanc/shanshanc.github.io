@@ -372,8 +372,6 @@ form.contact-form ul li input[type="submit"]:active {
   background: #d0d0d0;
 }
 
-
-
 /***End of Contact Form***/
 
 /** sticky navigation**/
@@ -385,12 +383,37 @@ form.contact-form ul li input[type="submit"]:active {
 }
 
 /** arrow for class flow **/
-
-
 .arrow {
   display: inline-block;
   width: 100%;
   text-align: center;
 }
+
+/** FAQ blog template**/
+.faq-description {
+  font-size: 20px;
+  color: #999;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 2em;
+    right: 0px;
+    text-decoration: none;
+    color: #000000;
+    background-color: rgba(235, 235, 235, 0.80);
+    font-size: 12px;
+    padding: 1em;
+    display: none;
+}
+
+.back-to-top:hover {    
+    background-color: rgba(135, 135, 135, 0.50);
+}
+
+a.faq-anchor {
+  padding-top: 90px;
+}
+
 
 

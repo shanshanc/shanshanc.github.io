@@ -17,17 +17,27 @@ $('#topNav').sticky({
 });
 
 
-// chart
-google.load('visualization', '1');   // Don't need to specify chart libraries!
-      google.setOnLoadCallback(drawVisualization);
 
-      function drawVisualization() {
-        var wrapper = new google.visualization.ChartWrapper({
-          chartType: 'ColumnChart',
-          dataTable: [['', 'Germany', 'USA', 'Brazil', 'Canada', 'France', 'RU'],
-                      ['', 700, 300, 400, 500, 600, 800]],
-          options: {'title': 'Countries'},
-          containerId: 'vis_div'
-        });
-        wrapper.draw();
-      }
+// FAQ blog template - back to top
+$(document).ready(function() {
+    var offset = 220;
+    var duration = 500;
+    jQuery(window).scroll(function() {
+        if (jQuery(this).scrollTop() > offset) {
+            jQuery('.back-to-top').fadeIn(duration);
+        } else {
+            jQuery('.back-to-top').fadeOut(duration);
+        }
+    });
+    
+    jQuery('.back-to-top').click(function(event) {
+        event.preventDefault();
+        jQuery('html, body').animate({scrollTop: 0}, duration);
+        return false;
+    })
+});
+
+$(window).on("hashchange", function () {
+    window.scrollTo(window.scrollX, window.scrollY - 200);
+});
+
