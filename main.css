@@ -10,9 +10,6 @@ body {
   font-family: "Josefin sans",sans-serif;
   color: #555;
 }
-section,footer, div, ul, article, h2 {
-  border: 1px dotted grey;
-}
 
 h2 {
   color: #555;
@@ -39,7 +36,6 @@ li {
 }
 
 header {
-  border: 1px dotted grey;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,15 +44,12 @@ header {
   min-height: 4rem;
   background: transparent;
   opacity: 0.8;
+  
 }
 
 .content {
   flex-grow: 1;
   overflow: auto;
-}
-
-.logo {
-  border: 1px dotted blue;
 }
 
 .navbar {
@@ -69,7 +62,6 @@ header {
 }
 
 .navigation {
-  border: 1px dotted orange;
   list-style: none;
   display: flex;
 }
@@ -81,7 +73,7 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333;
+  color: #fff;
 }
 
 .header-primary {
@@ -105,22 +97,18 @@ header {
 
 .content-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.projects {
-  background-color: #dcc7aa;
-}
-
-.project-card {
-  border: 1px solid brown;
+.work-img-box img {
+  width: 360px;
+  height: auto;
 }
 
 .project-card img {
   width: 30%;
   height: auto;
-  border: 1px solid lightgray;
 }
 
 footer {
