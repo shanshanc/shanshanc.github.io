@@ -1,0 +1,155 @@
+/* theme color 
+https://www.canva.com/learn/website-color-schemes/
+#21
+blueberry: #6b7a8f
+apricot: #f7882f
+citrus: #f7c331
+apple core: #dcc7aa
+*/
+body {
+  font-family: "Josefin sans",sans-serif;
+  color: #555;
+}
+section,footer, div, ul, article, h2 {
+  border: 1px dotted grey;
+}
+
+h2 {
+  color: #555;
+}
+
+a {
+  text-decoration: none;
+  color: #555;
+}
+
+li {
+  list-style: none;
+  margin: 0 8px;
+}
+
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+header {
+  border: 1px dotted grey;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 0;
+  height: 4rem;
+  min-height: 4rem;
+  background: transparent;
+  opacity: 0.8;
+}
+
+.content {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.logo {
+  border: 1px dotted blue;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  display: none;
+}
+
+.navigation {
+  border: 1px dotted orange;
+  list-style: none;
+  display: flex;
+}
+
+.hero-main {
+  height: 90vh;
+  text-align: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./img/art-blank-color-139764.jpg");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333;
+}
+
+.header-primary {
+  font-size: 3.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.header-description {
+  font-size: 1.5rem;
+}
+
+
+.work, .projects, footer {
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.2rem;
+}
+
+.content-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.projects {
+  background-color: #dcc7aa;
+}
+
+.project-card {
+  border: 1px solid brown;
+}
+
+.project-card img {
+  width: 30%;
+  height: auto;
+  border: 1px solid lightgray;
+}
+
+footer {
+  background-color: #6a7b8f;
+}
+
+.contact-box {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.contact-box li {
+  list-style: none;
+  margin: 5px 10px;
+}
+
+.contact-box li a {
+  text-decoration: none;
+}
+
+a .fas, a .fab {
+ color: #fff;
+}
+
+@media only screen and (max-width: 479px) {
+  .navigation {
+    display: none;
+  }
+  .bar {
+    display: inline;
+  }
+}
