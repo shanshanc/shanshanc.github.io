@@ -6,9 +6,11 @@ apricot: #f7882f
 citrus: #f7c331
 apple core: #dcc7aa
 */
+
 body {
   font-family: "Josefin sans",sans-serif;
   color: #555;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -18,6 +20,11 @@ h2 {
 a {
   text-decoration: none;
   color: #555;
+}
+
+ul, p {
+  margin-bottom: 0;
+  padding: 0;
 }
 
 li {
@@ -44,7 +51,6 @@ header {
   min-height: 4rem;
   background: transparent;
   opacity: 0.8;
-  
 }
 
 .content {
@@ -86,33 +92,97 @@ header {
   font-size: 1.5rem;
 }
 
-
-.work, .projects, footer {
+.work, .about, footer {
   text-align: center;
 }
 
-.section-title {
-  font-size: 2.2rem;
+.about {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #dcc7aa;
 }
 
-.content-row {
+.about p {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.aboutme-card {
+  margin: 0 20%;
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  padding-top: 25px;
+  margin-bottom: 0;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 8rem;
+  background-color: #777;
+  margin: 1.5rem auto;
+}
+
+.work-card {
+  margin: 1% 10%;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.work-img-box img {
-  width: 360px;
+.work-card-text, .work-card-img {
+  margin: 8px;
+  color: #6b7a8f;
+}
+
+.work-card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.work-card-text h3 {
+  font-size: 1.5rem;
+  color: #6b7a8f;
+}
+
+.work-card-text p {
+  max-width: 460px;
+  min-width: 300px;
+  font-size: 1.3rem;
+}
+
+.work-card-img img {
+  width: 460px;
   height: auto;
 }
 
-.project-card img {
-  width: 30%;
-  height: auto;
+.in-between-work-card {
+  border-width: 0.5px 0;
+  border-style: solid;
+  border-color: #f1f1f1;
 }
 
 footer {
   background-color: #6a7b8f;
+  color: #fff;
+}
+
+footer h2 {
+  color: #fff;
+}
+
+footer .section-title::after {
+  background-color: #fff;
 }
 
 .contact-box {
@@ -133,11 +203,27 @@ a .fas, a .fab {
  color: #fff;
 }
 
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 768px) {
   .navigation {
     display: none;
   }
   .bar {
     display: inline;
+  }
+
+  .header-description {
+    display: none;
+  }
+
+  .work-card {
+    margin: 0;
+    flex-direction: column;
+  }
+
+  .work-card-text {
+    order: -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -4,7 +4,7 @@
   <title>Shanshan Chen - Software Developer & Web Analyst</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="description" content="I am a Software Developer and Web Analyst from Taiwan.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scale=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- CSS -->
   <link type="text/css" rel="stylesheet" href="./main.css">
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400" rel="stylesheet">
@@ -24,9 +24,9 @@
           <i class="fas fa-bars fa-2x"></i>
         </div>
         <ul class="navigation">
-          <li>About</li>
-          <li>Work</li>
-          <li>Contact</li>
+          <a href="#about"><li>About</li></a>
+          <a href="#work"><li>Work</li></a>
+          <a href="#contact"><li>Contact</li></a>
         </ul>
       </div>
     </header>
@@ -36,50 +36,48 @@
         <div class="hero-main">
           <h1 class="header-primary">Hello, I'm Shanshan</h1>
           <!-- <h1 class="header-primary">My name is Shanshan Chen</h1> -->
-          <p class="header-description">I'm a software developer with a website analysis background</p>
+          <p class="header-description">A software developer with a website analysis background</p>
         </div>
       </section>
-      <section class="work">
+      <section class="about" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="aboutme-card">
+          <p>I'm a software developer whose skill sets include JS (ES6), Node.js, React, Redux, Webpack and reasonable CSS along with Sass.</p>
+        </div>
+      </section>
+      <section class="work" id="work">
         <h2 class="section-title">Recent Work</h2>
-        <div class="content-row">
-          <article>
+        <article class="work-card">
+          <div class="work-card-text">
             <a href="https://github.com/F-Smith/whats-that" target="_blank"><h3>What's That</h3></a>
             <p>A social drawing game based on Google's Quick Draw API, react, redux, and socket.io. </p>
-          </article>
-          <div class="work-img-box">
+          </div>
+          <div class="work-card-img">
             <img src="https://res.cloudinary.com/dfxpxn42j/image/upload/v1564649664/profile/whats-that_gw3o5k.jpg" alt="What's That app" />
           </div>
-        </div>
-        <div class="content-row">
-          <div class="work-img-box">
+        </article>
+        <article class="work-card in-between-work-card">
+          <div class="work-card-img">
             <img src="https://res.cloudinary.com/dfxpxn42j/image/upload/v1564649663/profile/free-your-stuff_xg16lq.png" alt="Free Your Stuff" />
           </div>
-          <article>
+          <div class="work-card-text">
             <a href="https://github.com/shanshanc/FreeYourStuff-FE" target="_blank"><h3>Free Your Stuff</h3></a>
             <p>A mobile-first platform designed to help facilitate the culture of giving away your unused/unwanted items away to people who need them more then you!</p>
-          </article>
-        </div>
-        <div class="content-row">
-          <article>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-card-text">
             <a href="https://github.com/shanshanc/scraping-project" target="_blank"><h3>Scraping</h3></a>
             <p>Get the product information on your website and serve dynamic product ads via Google Product Search, Facebook Ads, and more!</p>
-          </article>
-          <div class="work-img-box">
+          </div>
+          <div class="work-card-img">
             <img src="https://github.com/shanshanc/scraping-project/blob/master/images/homepage.png?raw=true" alt="Scraping" />
           </div>
-        </div>
+        </article>
       </section>
-      <section class="projects">
-        <h2 class="section-title">Other Projects</h2>
-        <div class="project-card">
-          <a href="https://github.com/shanshanc/weather-app" target="_blank"><h3>Weather App</h3></a>
-          <p>A toy app using React Hooks</p>
-            <img src="https://github.com/shanshanc/assets/raw/master/images/weather-app-main.png" alt="weather app" />
-        </div>
-        
-      </section>
+      
       <footer>
-        <h2 class="section-title">Contact</h2>
+        <h2 class="section-title" id="contact">Contact</h2>
         <!-- <div> -->
           <ul class="contact-box">
             <li>
