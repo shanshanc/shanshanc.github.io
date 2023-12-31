@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Short URL App</title>
+    <h1>404 page</h1>
+    <script type="text/javascript">
+        // https://blog.poychang.net/how-to-use-github-pages-build-a-short-url-app/
+        // 使用 IIFE 模式立即調用裡面的 JavaScript 程式碼
+        (function () {
+            // 使用 fetch API 來取得 routes.json 短網址對照表
+            fetch('urlMap.json')
+                .then(response => response.json())
+                .then(routes => {
+                    // 取出當前網址中，最後一個 / 之後的值
+                    var fragment = location.pathname.split('/').pop();
+                    // 從 urlMap.json 中找到該關鍵字所對應到的網址
+                    var url = routes[fragment];
+                    // 若該關鍵字有設定對應的網址，則轉跳到該網址中，若沒有則回到首頁
+                    location.href = url ? url : './index.html';
+                });
+        })();
+    </script>
+</head>
+</html>
