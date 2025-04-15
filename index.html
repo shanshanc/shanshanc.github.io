@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/favicon_s.ico">
   <!-- CSS -->
+  <link type="text/css" rel="stylesheet" href="./reset.css">
   <link type="text/css" rel="stylesheet" href="./main.css">
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400" rel="stylesheet">
   <!-- JS -->
@@ -14,41 +15,186 @@
 </head>
 <body>
   <div class="site-wrapper">
-    <header>
-      <div class="logo">
-        <div>Shanshan Chen</div>
-        <!-- <i class="fas fa-leaf fa-3x green"></i> -->
-        <!-- <i class="fas fa-flask fa-3x"></i> -->
-      </div>
-      <div class="navbar">
-        <div class="bar">
-          <i class="fas fa-bars fa-2x"></i>
-        </div>
-        <ul class="navigation">
-          <a href="#about"><li>About</li></a>
-          <a href="#work"><li>Work</li></a>
-          <a href="#contact"><li>Contact</li></a>
-        </ul>
-      </div>
-    </header>
     <div class="content">
       <section>
         <div id="top"></div>
         <div class="hero-main">
           <h1 class="header-primary">Hello, I'm Shanshan</h1>
           <!-- <h1 class="header-primary">My name is Shanshan Chen</h1> -->
-          <p class="header-description">A software developer with a website analysis background</p>
+          <p class="header-description">Creative Technologist bridging data, code, and content</p>
+          <p class="header-description">Exploring freelancing & content creation</p>
         </div>
       </section>
       <section class="about" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="aboutme-card">
-          <p>I'm a software developer whose skill sets include JS (ES6), Node.js, React, Redux, Webpack and reasonable CSS along with Sass.</p>
-          <p>In my spare time, I enjoy jogging, swimming, reading, and watching Netflix series. I also like diving or doing absolutly nothing once in a while.</p>
+          <p>I started in digital marketing and data analytics, led teams at iProspect, then pivoted into frontend development after training in Barcelona. I've built at KaiOS and Yahoo, and now focus on combining analytical thinking with user-facing development.</p>
         </div>
       </section>
+
+      <section id="services">
+        <h2 class="section-title">Services</h2>
+        <ul class="service-list">
+          <li><strong>Frontend Development:</strong> React / Vanilla JS websites and apps</li>
+          <li><strong>Analytics Consulting:</strong> GA4 setup, dashboarding, conversion tracking</li>
+          <li><strong>Data-driven Strategy:</strong> Data-informed planning for landing pages, eCommerce, and more</li>
+        </ul>
+      </section>
+
       <section class="work" id="work">
-        <h2 class="section-title">Recent Work</h2>
+        <h2 class="section-title">Featured Projects</h2>
+
+        <article class="work-card">
+          <div class="work-card-text">
+            <a href="https://github.com/shanshanc/finance-dash" target="_blank"><h3>US Stock Dashboard</h3></a>
+            <p>A dashboard to visualize financial statements data using React and Chart.js</p>
+          </div>
+          <div class="work-card-img">
+            <a href="https://github.com/shanshanc/finance-dash" target="_blank"><img src="./img/finance-dash.png" alt="Finance Dashboard" /></a>
+          </div>
+        </article>
+
+        <article class="work-card reverse">
+          <div class="work-card-text">
+            <h3>Marketing Data Dashboard</h3>
+            <p class="project-subtitle">(Google Sheets Series)</p>
+            <p>A 3-part hands-on series demonstrating how I transform raw campaign data into actionable insights using Google Sheets — covering data cleaning, referencing, KPI calculations, and visualization.</p>
+
+            <div class="work-card-accordion">
+              <div class="accordion" id="series-accordion">
+                <div class="accordion-item">
+                  <h4 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      Part 1 – Exploratory Analysis & KPI Overview
+                    </button>
+                  </h4>
+                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#series-accordion">
+                    <div class="accordion-body">
+                      <p>Introduces key Google Sheets formulas and workflows to explore campaign data using SUMIF, COUNTIF, and pivot tables.</p>
+                      <a href="./marketing-dashboard/part1.html"><span>Read Full Article →</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h4 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Part 2 – Lookup & Reference Techniques
+                    </button>
+                  </h4>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#series-accordion">
+                    <div class="accordion-body">
+                      <p>Compares INDEX+MATCH, VLOOKUP, and INDIRECT functions to dynamically link platform, campaign, and category information.</p>
+                      <a href="./marketing-dashboard/part2.html"><span>Read Full Article →</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h4 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Part 3 – Time Series Trends & Insights
+                    </button>
+                  </h4>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#series-accordion">
+                    <div class="accordion-body">
+                      <p>Applies text and date functions, creates combo charts, and draws performance insights using filters and named ranges.</p>
+                      <a href="./marketing-dashboard/part3.html"><span>Read Full Article →</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-card-img">
+            <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect width="360" height="360" fill="#f8f9fa" rx="12" ry="12"/>
+              
+              <!-- Divider -->
+              <path d="M180,40 L180,320" stroke="#dddddd" stroke-width="2" stroke-dasharray="6,4"/>
+              
+              <!-- Left side: Formulas -->
+              <rect x="30" y="70" width="120" height="220" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="4" ry="4"/>
+              
+              <!-- Cell Headers -->
+              <rect x="30" y="70" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <rect x="60" y="70" width="90" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              
+              <rect x="30" y="100" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="120" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">A</text>
+              
+              <rect x="30" y="130" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="150" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">B</text>
+              
+              <rect x="30" y="160" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="180" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">C</text>
+              
+              <rect x="30" y="190" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="210" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">D</text>
+              
+              <rect x="30" y="220" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="240" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">E</text>
+              
+              <rect x="30" y="250" width="30" height="30" fill="#f1f3f4" stroke="#dddddd" stroke-width="1"/>
+              <text x="45" y="270" font-family="Arial" font-size="12" text-anchor="middle" fill="#5f6368">F</text>
+              
+              <!-- Row Headers -->
+              <rect x="60" y="100" width="90" height="30" fill="#ffffff" stroke="#dddddd" stroke-width="1"/>
+              <text x="105" y="120" font-family="Arial" font-size="11" text-anchor="middle" fill="#5f6368">Value</text>
+              
+              <!-- Formula Cells -->
+              <rect x="60" y="130" width="90" height="30" fill="#ffffff" stroke="#dddddd" stroke-width="1"/>
+              <text x="65" y="150" font-family="Consolas, monospace" font-size="10" fill="#0b5394">=SUM(A2:A10)</text>
+              
+              <rect x="60" y="160" width="90" height="30" fill="#ffffff" stroke="#dddddd" stroke-width="1"/>
+              <text x="65" y="180" font-family="Consolas, monospace" font-size="10" fill="#0b5394">=MAX(B1:B20)</text>
+              
+              <rect x="60" y="190" width="90" height="30" fill="#e6f4ea" stroke="#dddddd" stroke-width="1"/>
+              <text x="65" y="210" font-family="Consolas, monospace" font-size="10" fill="#0b5394">=SUMIF(C:C,"social")</text>
+              
+              <rect x="60" y="220" width="90" height="30" fill="#ffffff" stroke="#dddddd" stroke-width="1"/>
+              <text x="65" y="240" font-family="Consolas, monospace" font-size="10" fill="#0b5394">=COUNTIF(D:D,">100")</text>
+              
+              <rect x="60" y="250" width="90" height="30" fill="#e6f4ea" stroke="#dddddd" stroke-width="1"/>
+              <text x="65" y="270" font-family="Consolas, monospace" font-size="10" fill="#0b5394">=UNIQUE(E:E)</text>
+              
+              <!-- Transformation Arrows -->
+              <path d="M160,140 C190,140 150,190 180,190" stroke="#4285f4" stroke-width="2" fill="none"/>
+              <path d="M160,170 C200,170 160,200 180,200" stroke="#0f9d58" stroke-width="2" fill="none"/>
+              <path d="M160,200 C210,200 150,220 180,210" stroke="#db4437" stroke-width="2" fill="none"/>
+              <path d="M177,190 L180,200 L183,190" fill="#4285f4"/>
+              <path d="M177,200 L180,210 L183,200" fill="#0f9d58"/>
+              <path d="M177,210 L180,220 L183,210" fill="#db4437"/>
+              
+              <!-- Right side: Dashboard -->
+              <rect x="210" y="70" width="120" height="220" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="4" ry="4"/>
+              
+              <!-- Chart Title -->
+              <text x="270" y="90" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#202124">Campaign Performance</text>
+              
+              <!-- Bar Chart -->
+              <rect x="230" y="110" width="20" height="80" fill="#4285f4" rx="2" ry="2"/>
+              <rect x="260" y="140" width="20" height="50" fill="#0f9d58" rx="2" ry="2"/>
+              <rect x="290" y="100" width="20" height="90" fill="#db4437" rx="2" ry="2"/>
+              
+              <line x1="220" y1="190" x2="320" y2="190" stroke="#dddddd" stroke-width="1"/>
+              
+              <text x="240" y="205" font-family="Arial" font-size="9" text-anchor="middle" fill="#5f6368">Social</text>
+              <text x="270" y="205" font-family="Arial" font-size="9" text-anchor="middle" fill="#5f6368">Media</text>
+              <text x="300" y="205" font-family="Arial" font-size="9" text-anchor="middle" fill="#5f6368">Influence</text>
+              
+              <!-- Pie Chart -->
+              <circle cx="270" cy="260" r="30" fill="none" stroke="#dddddd" stroke-width="1"/>
+              <path d="M270,260 L270,230 A30,30 0 0,1 295,275 z" fill="#4285f4"/>
+              <path d="M270,260 L295,275 A30,30 0 0,1 245,275 z" fill="#0f9d58"/>
+              <path d="M270,260 L245,275 A30,30 0 0,1 270,230 z" fill="#db4437"/>
+              
+              <!-- Title -->
+              <text x="180" y="40" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#202124">From Formulas to Insights</text>
+            </svg>
+          </div>
+        </article>
+
         <article class="work-card">
           <div class="work-card-text">
             <a href="https://github.com/F-Smith/whats-that" target="_blank"><h3>What's That</h3></a>
@@ -58,32 +204,14 @@
             <a href="https://github.com/F-Smith/whats-that" target="_blank"><img src="https://res.cloudinary.com/dfxpxn42j/image/upload/v1564649664/profile/whats-that_gw3o5k.jpg" alt="What's That app" /></a>
           </div>
         </article>
-        <article class="work-card in-between-work-card">
-          <div class="work-card-img">
-            <a href="https://github.com/shanshanc/FreeYourStuff-FE" target="_blank"><img src="https://res.cloudinary.com/dfxpxn42j/image/upload/v1564649663/profile/free-your-stuff_xg16lq.png" alt="Free Your Stuff" /></a>
-          </div>
-          <div class="work-card-text">
-            <a href="https://github.com/shanshanc/FreeYourStuff-FE" target="_blank"><h3>Free Your Stuff</h3></a>
-            <p>A mobile-first platform designed to help facilitate the culture of giving away your unused/unwanted items away to people who need them more then you!</p>
-          </div>
-        </article>
-        <article class="work-card">
-          <div class="work-card-text">
-            <a href="https://github.com/shanshanc/scraping-project" target="_blank"><h3>Scraping</h3></a>
-            <p>Get the product information on your website and serve dynamic product ads via Google Product Search, Facebook Ads, and more!</p>
-          </div>
-          <div class="work-card-img">
-            <a href="https://github.com/shanshanc/scraping-project" target="_blank"><img src="https://github.com/shanshanc/scraping-project/blob/master/images/homepage.png?raw=true" alt="Scraping" /></a>
-          </div>
-        </article>
       </section>
       
       <footer>
         <h2 class="section-title" id="contact">Contact</h2>
-        <!-- <div> -->
+        <div>
           <ul class="contact-box">
             <li>
-              <a href="mailto:contact@shanshanc.me" target="_blank">
+              <a href="mailto:contact@amateursDevLogs.net" target="_blank">
                 <i class="fas fa-envelope-square fa-3x"></i>
               </a>
             </li>
@@ -98,11 +226,12 @@
               </a>
             </li>
           </ul>
-        <!-- </div> -->
-        <div><p>All rights reserved</p></div>
+        </div>
+        <div class="copyright""><p>Copyright &copy; <span id="copyright-year"></span> Shanshan Chen All Rights Reserved</p></div>
       </footer>
     </div>
   </div>
-  <script src="/script.js"></script>
+  <script src="./navbar.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>

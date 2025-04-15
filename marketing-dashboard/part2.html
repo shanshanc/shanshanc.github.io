@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Marketing Data Dashboard - Part 1 | Shanshan Chen</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="description" content="Part 1 of the Marketing Data Dashboard series - Exploratory Analysis & KPI Overview">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../img/favicon_s.ico">
+  <!-- CSS -->
+  <link type="text/css" rel="stylesheet" href="../reset.css">
+  <link type="text/css" rel="stylesheet" href="../main.css">
+  <link type="text/css" rel="stylesheet" href="../blog.css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400" rel="stylesheet">
+  <!-- JS -->
+  <script src="https://kit.fontawesome.com/7177753014.js"></script>
+</head>
+<body>
+  <div class="site-wrapper">
+    <div class="content">
+      <article class="blog-post">
+        <div class="blog-header">
+          <h1>Part 2 – Lookup & Reference Techniques</h1>
+          <div class="meta-item">
+            <span class="meta-label">
+              <a href="https://docs.google.com/spreadsheets/d/1g9wdislk8hSq0Qp3VCmCv6p-f4CZymKOFaoxRXc0ueI/edit?usp=sharing" target="_blank">Example Google Sheet</a>
+            </span>
+            <span class="meta-label">Translation:
+              <a href="./zh-TW/part2.html">ZH-TW</a>
+            </span>
+          </div>
+          <p class="blog-description">Data retrieval techniques using INDEX+MATCH, VLOOKUP, and INDIRECT.</p>
+        </div>
+        <div class="blog-content">
+          <p>Continuing from the <a href="./part1.html">previous post</a>, this article aims to retrieve:</p>
+          <ul>
+            <li>The <strong>category</strong> corresponding to each <strong>platform</strong></li>
+            <li>The <strong>platform</strong> and <strong>category</strong> for each <strong>campaign</strong></li>
+          </ul>
+        
+          <p>We'll use the following functions:</p>
+          <ul>
+            <li><code>INDEX + MATCH</code></li>
+            <li><code>VLOOKUP</code></li>
+            <li><code>INDIRECT</code></li>
+          </ul>
+        
+          <h2>INDEX + MATCH</h2>
+          <p><code>INDEX</code> with <code>MATCH</code> is a powerful combo. While it may seem complex at first, but it's really flexible once you get the hang of it.</p>
+        
+          <p>The first argument of <code>INDEX</code> is the column from which you want to retrieve data — in this case, the <code>category</code> column (column D) of the raw data. The second argument is the row number. In this example we put 2 and get the value in cell D2, which is "social". Since this row number will be dynamic, we use <code>MATCH</code> to find it.</p>
+        
+          <p><code>MATCH</code> needs three arguments:</p>
+          <ul>
+            <li><strong>Lookup value</strong>: e.g., values in column A of the <code>platform</code> sheet (facebook, google, youtube, etc.)</li>
+            <li><strong>Lookup range</strong>: where to search for the value — in this case, column L of the <code>raw</code> sheet (platform)</li>
+            <li><strong>Match type</strong>: usually 0, which means exact match</li>
+          </ul>
+        
+          <p>For example, to find the value of A3 in the platform sheet (which is "facebook"), <code>MATCH</code> searches column L of the raw data and returns the row number of its first appearance, which is 2. This value is then used as the row number in the <code>INDEX</code> function.</p>
+        
+          <p>So in <code>platform</code> sheet cell B3, our formula looks like this:</p>
+          <img src="../img/mkt-dsah/indexmatch.png" alt="Index match formula example">
+        
+          <p>There are two other functions related to referencing values by position: <code>VLOOKUP</code> and <code>INDIRECT</code>. <code>VLOOKUP</code> is more commonly used in practice than <code>INDIRECT</code>. These two are not the best fits for this specific case, though.</p>
+        
+          <p>The lookup exercises below are mainly for practice, as there’s no strict one-to-one relationship between platform and category. A single platform might appear under both "social" and "influencer". In such cases, the first match is returned.</p>
+        
+          <h2>VLOOKUP</h2>
+          <p><code>VLOOKUP</code> searches for a value in the first column of a data range and returns a value from a specified column in the same row.</p>
+        
+          <p>It takes three required arguments:</p>
+          <ol>
+            <li>Lookup value</li>
+            <li>Table range</li>
+            <li>Column number (to return from)</li>
+          </ol>
+          <p>It also has an optional fourth argument for match type: exact (0) or approximate (1), with 1 being the default.</p>
+        
+          <p>For example, in a blank cell of the <code>raw</code> sheet, set:</p>
+          <pre><code>=VLOOKUP("social", D1:L8, 2, 0)</code></pre>
+          <p>This searches column D of the range D1:L8 for the first occurrence of "social" and returns the value from the second column of that row — impressions from row 2 in this case.</p>
+          <img src="../img/mkt-dsah/vlookup.png" alt="VLOOKUP example">
+        
+          <p>If the lookup value isn’t in the first column of the range, rearrange the data before using <code>VLOOKUP</code>.</p>
+        
+          <p>Although the fourth argument is optional, it’s more precise to exact math. The default in both Excel and Google Sheets is <em>approximate</em>, which can cause unexpected results.</p>
+        
+          <p>More on official docs:</p>
+          <ul>
+            <li><a href="https://support.microsoft.com/zh-tw/office/vlookup-%E5%87%BD%E6%95%B8-0bbc8083-26fe-4963-8ab8-93a18ad188a1" target="_blank">Excel VLOOKUP</a></li>
+            <li><a href="https://support.google.com/docs/answer/3093318?hl=en" target="_blank">Google Sheets LOOKUP</a></li>
+          </ul>
+        
+          <h2>INDIRECT</h2>
+          <p><code>INDIRECT</code> takes one required argument — a string representing a cell reference, like <code>"D2"</code> or <code>"Sheet1!A2"</code>.</p>
+        
+          <p>It's often used when consolidating data from multiple sheets into one summary. For example, if data for each month is stored in separate sheets (January, February, etc.), and you want to grab them all in a summary sheet, <code>INDIRECT</code> would be very handy.</p>
+        
+          <p>There’s already a great article describing use cases: 
+            <a href="https://zanzan.tw/archives/4387#%E4%B8%83%E3%80%81SUMIF%E5%87%BD%E6%95%B8%E7%B5%84%E5%90%88%E5%85%AC%E5%BC%8F" target="_blank">SUMIF combined with INDIRECT (by Zanzan)</a>.
+          </p>
+        </div>          
+        
+      </article>
+      
+      <!-- Navigation between parts -->
+      <div class="part-navigation">
+        <a href="./part1.html" class="prev-part">
+          <i class="fas fa-arrow-left"></i>
+          Previous: Part 1 – Exploratory Analysis & KPI Overview
+        </a>
+        <a href="./part3.html" class="next-part">
+          Next: Part 3 – Time Series Trends & Insights
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="../navbar.js"></script>
+  <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Marketing Data Dashboard - Part 1 | Shanshan Chen</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="description" content="Part 1 of the Marketing Data Dashboard series - Exploratory Analysis & KPI Overview">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../img/favicon_s.ico">
+  <!-- CSS -->
+  <link type="text/css" rel="stylesheet" href="../../reset.css">
+  <link type="text/css" rel="stylesheet" href="../../main.css">
+  <link type="text/css" rel="stylesheet" href="../../blog.css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400" rel="stylesheet">
+  <!-- JS -->
+  <script src="https://kit.fontawesome.com/7177753014.js"></script>
+</head>
+<body>
+  <div class="site-wrapper">
+    <div class="content">
+      <article class="blog-post">
+        <div class="blog-header">
+          <h1>Part 1 – Exploratory Analysis & KPI Overview</h1>
+          <div class="meta-item">
+            <span class="meta-label">
+              <a href="https://docs.google.com/spreadsheets/d/1g9wdislk8hSq0Qp3VCmCv6p-f4CZymKOFaoxRXc0ueI/edit?usp=sharing" target="_blank">Example Google Sheet</a>
+            </span>
+            <span class="meta-label">Translation:
+              <a href="../../part1.html">EN</a>
+            </span>
+          </div>
+          <p class="blog-description">Introduces key workflows and tools in Google Sheets / Excel to explore marketing data using formulas and pivot tables.</p>
+        </div>
+        <div class="blog-content">
+          <p>拿到資料的第一件事是先進行初步了解: 區間、範圍、趨勢，等等</p>
+        
+          <p>常用的方法有:</p>
+          <ul>
+            <li>函式
+              <ul>
+                <li>max, min</li>
+                <li>sum, sumif</li>
+                <li>count, countif</li>
+                <li>find</li>
+                <li>left, mid, right</li>
+                <li>unique</li>
+                <li>lower</li>
+              </ul>
+            </li>
+            <li>樞紐分析表</li>
+          </ul>
+        
+          <p>這個系列會使用從 kaggle 下載的 <a href="https://www.kaggle.com/datasets/sinderpreet/analyze-the-marketing-spending">Digital Marketing Metrics & KPIs to Measure (SQL)</a></p>
+          <p>Kaggle是一個有很多Machine Learning資源的平台，除了資料集之外，也有寫好的models可以參考</p>
+          <p>本系列用的函式，在Excel和Google Sheet都可以使用，使用方法也剛好相同</p>
+        
+          <p>下載檔解壓縮之後把資料貼到Google Sheet</p>
+          <img src="../../img/mkt-dsah/col-list.png" alt="Column list">
+        
+          <h2>Min, Max</h2>
+          <p>首先用min和max 函式，查看數值型資料的最大跟最小值</p>
+          <p>包括impressions、spent、clicks、leads、orders、revenue。也可以用來查看日期範圍</p>
+          <p>複製表頭到新分頁，第2、3列分別表示最小值和最大值</p>
+          <img src="../../img/mkt-dsah/min-max.png" alt="Min Max Example">
+        
+          <p>日期的最小值 (B2) 公式輸入 <code>=min(Sheet1!B:B)</code>，找Sheet1 B欄的最小值</p>
+          <p>日期的最大值(B3) 把min換成max即可 <code>=MAX(Sheet1!B:B)</code></p>
+        
+          <p>顯示格式: date的格式是Date，可從Format → Number → Date選擇，其他的用一般數字呈現，加上逗號比較方便看</p>
+        
+          <p>可以看出內容是2021年2月份的行銷成效，落差蠻大的，有可能是不同類型廣告活動的關係</p>
+        
+          <h2>Sumif, Countif</h2>
+          <p>從campaign_name和category進一步探索資料集，不過…在那之前需要加工一下</p>
+          <p>觀察campaign_name可以發現，廣告活動名稱包含了平台名稱 - facebook、instagram、google、youtube、等</p>
+        
+          <p>campaign_name的結構: 底線左右兩邊分別是平台和自訂的廣告活動類型</p>
+          <p>我們可以用find找到底線後，用left取底線左邊的平台名稱</p>
+        
+          <p>在原始資料的右邊欄位: L欄，輸入 <code>=left(C2,find("_",C2)-1)</code></p>
+        
+          <p>為了統一平台名稱格式，可包在lowe函式內都換成小寫 <code>=lower(left(C2,find("_",C2)-1))</code></p>
+          <img src="../../img/mkt-dsah/platform.png" alt="Platform Parsing">
+        
+          <p>接下來就可以依據category和platform加總數值</p>
+          <p>先從category開始，在新分頁 Sheet3 A1 輸入 <code>=UNIQUE(Sheet1!D:D)</code> 取得清單</p>
+          <img src="../../img/mkt-dsah/unique.png" alt="Unique Categories">
+        
+          <p>用sumif加總，例如 B2: <code>=sumif(Sheet1!$D:$D,$A2,Sheet1!F:F)</code></p>
+        
+          <p>拖曳複製公式的時候注意使用 <code>$</code> 符號固定欄/列</p>
+          <img src="../../img/mkt-dsah/sumif.png" alt="Sumif Calculation">
+        
+          <p>完成所有加總後，即可往右複製取得完整數據</p>
+          <img src="../../img/mkt-dsah/drag.png" alt="Drag Formula">
+        
+          <p>接著可以開始進行指標計算：</p>
+          <ul>
+            <li>CTR = clicks / impressions</li>
+            <li>CPC = spent / clicks</li>
+            <li>CPL = spent / leads</li>
+            <li>CPA = spent / orders</li>
+            <li>ROAS = revenue / spent</li>
+            <li>Average order price</li>
+          </ul>
+        
+          <p>也可計算 clicks, leads, orders, revenue 的占比</p>
+          <img src="../../img/mkt-dsah/cat-summary.png" alt="Category Summary">
+        
+          <p>觀察資料：</p>
+          <ul>
+            <li>social 和 media 占 90% 的曝光</li>
+            <li>主要leads來自 social 和 influencer</li>
+            <li>influencer ROAS 最高 ($2.54)</li>
+            <li>可以考慮增加 influencer 預算投入</li>
+          </ul>
+          <p>這個結果和一般行銷表現的觀察蠻一致的: display/media廣告帶來曝光，其他渠道帶來轉換</p>
+          <p>正想對platform和campaign做相同分析，但發現缺少對應的category</p>
+          <p>這部分會在下一篇<a href="./part2.html">資料參照</a>中說明</p>
+        
+          <p>建議給四個分頁命名如: raw、maxmin、category、platform，比較一目瞭然</p>
+          <p>目前為止的分析也可用樞紐分析表（Pivot Table）達成</p>
+        
+          <h2>樞紐分析表 Pivot Table</h2>
+          <p>回到原始資料工作表，選取全部範圍，點選 Insert → Pivot Table</p>
+          <img src="../../img/mkt-dsah/pivot.png" alt="Insert Pivot">
+        
+          <p>使用右側編輯器進行設計</p>
+          <img src="../../img/mkt-dsah/pivot-edit.png" alt="Pivot Editor">
+          <img src="../../img/mkt-dsah/pivot-edit2.png" alt="Pivot Auto Fields">
+        
+          <p>以clicks占比為例，新增clicks欄位，再選擇 <strong>Show as: % of grand total</strong></p>
+          <img src="../../img/mkt-dsah/click-per.png" alt="Click Percentage">
+        
+          <p>新增自訂欄位計算 CPC = spent / clicks</p>
+          <img src="../../img/mkt-dsah/pivot-calc.png" alt="Calculated Field">
+        
+          <p>樞紐表一開始建置花時間，但之後就可以快速切換維度（如category、platform、date）</p>
+        </div>        
+        
+      </article>
+      
+      <!-- Navigation between parts -->
+      <div class="part-navigation">
+        <a href="./part2.html" class="next-part">
+          Next: Part 2 – Lookup & Reference Techniques
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="../../navbar.js"></script>
+  <script src="../../script.js"></script>
+</body>
+</html>

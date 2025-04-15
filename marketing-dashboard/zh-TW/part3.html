@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Marketing Data Dashboard - Part 1 | Shanshan Chen</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="description" content="Part 1 of the Marketing Data Dashboard series - Exploratory Analysis & KPI Overview">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../img/favicon_s.ico">
+  <!-- CSS -->
+  <link type="text/css" rel="stylesheet" href="../../reset.css">
+  <link type="text/css" rel="stylesheet" href="../../main.css">
+  <link type="text/css" rel="stylesheet" href="../../blog.css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400" rel="stylesheet">
+  <!-- JS -->
+  <script src="https://kit.fontawesome.com/7177753014.js"></script>
+</head>
+<body>
+  <div class="site-wrapper">
+    <div class="content">
+      <article class="blog-post">
+        <div class="blog-header">
+          <h1>Part 3 – Time Series Trends & Insights</h1>
+          <div class="meta-item">
+            <span class="meta-label">
+              <a href="https://docs.google.com/spreadsheets/d/1g9wdislk8hSq0Qp3VCmCv6p-f4CZymKOFaoxRXc0ueI/edit?usp=sharing" target="_blank">Example Google Sheet</a>
+            </span>
+            <span class="meta-label">Translation:
+              <a href="../../part3.html">EN</a>
+            </span>
+          </div>
+          <!-- <p class="blog-description">Visualizing time series trends and extracting insights using filters and named ranges.</p> -->
+          <p class="blog-description">廣告活動成效與趨勢分析</p>
+        </div>
+        <div class="blog-content">
+          <!-- <h2>Campaign 成效與趨勢分析</h2> -->
+          <p>接著先前的<a href="../part1.html">資料總覽</a>和<a href="../part2.html">資料參照</a>，用同樣的方式以 campaign_name 和 c_date 為目標整理資料。</p>
+        
+          <h3>函式</h3>
+          <ul>
+            <li>text</li>
+            <li>weekday</li>
+          </ul>
+        
+          <h3>Chart設定</h3>
+          <p>記得固定好欄位，拖拉的時候才不會歪掉。</p>
+          <img src="../../img/mkt-dsah/campaign_perf.png" alt="campaign_perf">
+        
+          <p>整理 daily 資料的時候可以多加一個 Day of Week (DOW)，顯示週一、週二、週三等，比較週間和週末成效是否有差異。</p>
+
+          <p>首先用 weekday 拿到每個日期代表的數字1到7，預設每週從週日(1)開始，週六(7)結束。可調整第二個引數改變預設值，例如若改成2，回傳值1-7表示週一至週日。</p>
+          <a href="https://support.microsoft.com/zh-tw/office/weekday-%E5%87%BD%E6%95%B8-60e44483-2ed1-439f-8bd0-e404c190949a" target="_blank">WEEKDAY 函式文件</a>
+
+          <p>在處理文字格式的時候 text 函式很好用，text 需要兩個引數，第一個是目標值，第二個是格式。日期格式常用的有 "dddd" 和 "ddd"，分別是 weekday 全名 (Monday, Tuesday...) 和簡稱 (Mon, Tue...)</p>
+          <a href="https://support.microsoft.com/zh-tw/office/text-%E5%87%BD%E6%95%B8-20d5ac4d-7b94-49fd-bb38-93d29371225c" target="_blank">TEXT 函式文件</a>
+        
+          <p>把從weekday拿到的數字傳給text函式，就能得到Mon、Tue等代表DOW的文字。</p>
+
+          <div><img src="../../img/mkt-dsah/weekday.png" alt="weekday"></div>
+        
+          <p>由結果看來，週五與週六訂單最多，週間和週末成效沒有明顯差異。</p>
+          <img src="../../img/mkt-dsah/weekend.png" alt="weekend">
+          <img src="../../img/mkt-dsah/week.png" alt="week">
+        
+          <p>接下來用 Combo Chart 做直條 + 折線圖。</p>
+            
+          <p>第一組：clicks (bar) + CPC (line)。</p>
+          <ol>
+            <li>Insert → Chart，Chart Type 選 Combo Chart。</li>
+            <li>Data range 加入 c_date、clicks、CPC。</li>
+            <li>X-axis：c_date，Series：clicks、CPC。</li>
+            <li>Customize → Series，把 CPC 設定為 right-axis。</li>
+          </ol>
+          <img src="../../img/mkt-dsah/combo.png" alt="combo chart">
+          <img src="../../img/mkt-dsah/combo_right_axis.png" alt="combo chart right axis">
+        
+          <p>觀察：花費與 clicks 集中在 2/10 ~ 2/20，查了一下這段時間是當年的農曆新年 (2021/2/12~2/16)。2/18 impressions 爆量但當天行銷沒有特別增加，有可能計價是基於 orders 而非 impressions。</p>
+          <img src="../../img/mkt-dsah/combo_12.png" alt="combo 12">
+          <img src="../../img/mkt-dsah/combo_3.png" alt="combo 3">
+        
+          <p>用樞紐分析表查 2/18 impressions 來源為 banner_partner。</p>
+          <img src="../../img/mkt-dsah/banner_partner.png" alt="banner_partner">
+        
+          <p>其他指標未隨曝光量同日上升，訂單量高峰發生在impressions高峰後約 2 天。</p>
+          <img src="../../img/mkt-dsah/banner_partner_daily.png" alt="banner_partner_daily">
+        
+          <h3>函式產生欄位 - 排序</h3>
+          <p>函式生成的欄位無法用篩選器排序，影響分類查看成效。兩種解法：</p>
+          <ul>
+            <li>Named Ranges</li>
+            <li>Filter</li>
+          </ul>
+        
+          <h4>Named Ranges</h4>
+          <p>先選取目標資料範圍，並命名為 <code>campaign_performance</code>，</p>
+          <p>使用 sort 函式將<code>campaign_performance</code>列為資料來源，設定要排序的欄位代號 </p>
+          <pre>=sort(campaign_performance,3,FALSE,2,TRUE,6,FALSE)</pre>
+          <a href="https://support.google.com/docs/answer/3093150?hl=zh-TW" target="_blank">SORT 函式文件</a>
+          <img src="../../img/mkt-dsah/named_ranges.png" alt="named ranges">
+          <img src="../../img/mkt-dsah/named_ranges_2.png" alt="named ranges 2">
+          
+        
+          <p>觀察：</p>
+          <ul>
+            <li>leads 與訂單集中於 influencer 和 social</li>
+            <li>最高客單價：influencer</li>
+            <li>最多曝光：media</li>
+            <li>有機會可加碼預算：instagram_blogger、youtube_blogger</li>
+            <li>需優化：facebook_lal（ROAS 僅 $0.1）</li>
+          </ul>
+        
+          <p>Google search 中 google_hot、google_wide 的 CPA 差不多但客單價落差大，由名稱猜測可能和文案位置或文案內容有闗，需要深入檢視。</p>
+        
+          <h4>Filter</h4>
+          <p>兩種方式：</p>
+        
+          <h5>1. Filter view</h5>
+          <p>建立 filter view 後，在要排序的欄位設定排序方式。</p>
+          <img src="../../img/mkt-dsah/filter_1.png" alt="filter_1">
+          <img src="../../img/mkt-dsah/filter_2.png" alt="filter_2">
+        
+          <h5>2. Filter 函式</h5>
+          <p>召換filter函式，選定資料範圍A3:U13，並設定篩選條件。</p>
+          
+          <img src="../../img/mkt-dsah/filter.png" alt="filter example">
+          <img src="../../img/mkt-dsah/filter1.png" alt="filter with one condition">
+          <img src="../../img/mkt-dsah/filter2.png" alt="filter with multiple conditions">
+          <p>更多filter函式參考資源和教學：</p>
+          <ul>
+            <li><a href="https://support.google.com/docs/answer/3093197?hl=zh-TW" target="_blank">Google Sheet Filter 函式</a></li>
+            <li><a href="https://support.microsoft.com/zh-tw/office/filter-%E5%87%BD%E6%95%B8-f4f7cb66-82eb-4767-8f7c-4877ad80c759" target="_blank">Excel Filter 函式</a></li>
+            <li><a href="https://www.youtube.com/watch?v=KS60-3E2DEI" target="_blank">跨工作表應用教學 - Meiko老師</a></li>
+          </ul>
+
+          <h3>總結</h3>
+          <p>這個系列用到的功能和函式分類：</p>
+          <ul>
+            <li>圖表與樞紐分析表</li>
+            <li>文字處理：left, mid, right, lower, find, unique, text</li>
+            <li>數字/日期：max, min, weekday</li>
+            <li>條件計算：sum, sumif, count, countif</li>
+            <li>參照比對：vlookup, indirect, index + match</li>
+          </ul>
+          <p>依照這些函式進行資料分類、篩選與依條件整理，最後進行成效分析，是做描述型資料分析很方便的工具包，同樣的步驟也可以應用在其他資料集。</p>
+        </div>              
+        
+      </article>
+      
+      <!-- Navigation between parts -->
+      <div class="part-navigation">
+        <a href="./part2.html" class="prev-part">
+          <i class="fas fa-arrow-left"></i>
+          Previous: Part 2 – Lookup & Reference Techniques
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="../../navbar.js"></script>
+  <script src="../../script.js"></script>
+</body>
+</html>
