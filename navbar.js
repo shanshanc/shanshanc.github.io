@@ -13,7 +13,6 @@ const PATH = {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
   // Determine navbar html path based on current path
   const currentPath = window.location.pathname;
@@ -30,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const mobileMenu = document.querySelector('.mobile-menu');
       
       bar.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+      });
+
+      mobileMenu.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
       });
 
