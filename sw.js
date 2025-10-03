@@ -5,16 +5,17 @@ const CACHE_NAME = `shanshanc-site-${CACHE_VERSION}`;
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './navbar.html',
-  '../navbar.html',
-  './main.css',
+  './header.html',
+  './footer.html',
+  './styles.css',
   './script.js',
-  './img/finance-dash.png',
+  './img/finance-dash.jpg',
   './img/favicon_s.ico',
-  './img/art-blank-color-139764.jpg',
-  './marketing-dashboard/part1.html',
-  // './marketing-dashboard/part2.html',
-  // './marketing-dashboard/part3.html'
+  './img/pexels-simon73-1323550_1.jpg',
+  './img/project-managment.jpg',
+  './img/mkgt-dash.jpg',
+  './mktg-dahboard.html',
+  './mktg-dahboard-zh.html'
 ];
 
 // Install event - precache assets
