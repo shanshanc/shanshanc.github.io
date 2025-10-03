@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Data Dashboard with Google Sheets | Shanshan Chen</title>
+    <meta name="description" content="A comprehensive guide to transforming raw marketing campaign data into actionable insights using Google Sheets formulas, pivot tables, and visualization techniques.">
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" href="./reset.css">
+    <link type="text/css" rel="stylesheet" href="./styles.css">
+    <link rel="icon" href="../img/favicon_s.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header id="header"></header>
+
+    <main>
+        <div class="content">
+            <article class="blog-post">
+                <div class="blog-header">
+                    <h1>Marketing Data Dashboard with Google Sheets</h1>
+                    <div class="meta-item">
+                        <span class="meta-label">
+                            <a href="https://docs.google.com/spreadsheets/d/1g9wdislk8hSq0Qp3VCmCv6p-f4CZymKOFaoxRXc0ueI/edit?usp=sharing" target="_blank">Example Google Sheet</a>
+                        </span>
+                        <span class="meta-label">
+                            <a href="../articles.html">← Back to Articles</a>
+                        </span>
+                        <span class="meta-label">Language:
+                          <a href="./mktg-dahboard-zh.html">zh-TW</a>
+                        </span>
+                    </div>
+                    <p class="blog-description">A comprehensive 3-part article on transforming raw marketing campaign data into actionable insights using Google Sheets formulas, pivot tables, and visualization techniques.</p>
+                    
+                    <!-- Formula Reference -->
+                    <div class="formula-reference">
+                        <h3>Quick Formula Reference</h3>
+                        <p>List of formulas used in this article:</p>
+                        <div class="formula-grid">
+                            <div class="formula-category">
+                                <h4>Data Exploration</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=MIN(Sheet1!B:B)</code><span>Find minimum value</span></div></li>
+                                    <li><div class="formula-item"><code>=MAX(Sheet1!B:B)</code><span>Find maximum value</span></div></li>
+                                    <li><div class="formula-item"><code>=UNIQUE(Sheet1!D:D)</code><span>Get unique categories</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>Text Processing</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=LEFT(C2, FIND("_", C2) - 1)</code><span>Extract data from left side + FIND</span></div></li>
+                                    <li><div class="formula-item"><code>=LOWER(L2)</code><span>Convert text to lowercase</span></div></li>
+                                    <li><div class="formula-item"><code>=TEXT(date, "dddd")</code><span>Get weekday name</span></div></li>
+                                    <li><div class="formula-item"><code>=WEEKDAY(date)</code><span>Get weekday number (1-7, default Sunday is 1)</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>Conditional Calculations</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=SUMIF(Sheet1!$D:$D, $A2, Sheet1!F:F)</code><span>Sum up values based on criteria</span></div></li>
+                                    <li><div class="formula-item"><code>=COUNTIF(range, criteria)</code><span>Count uniquies based on criteria</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>Lookup & Reference</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=INDEX(D:D, MATCH(A3, L:L, 0))</code><span>INDEX + MATCH lookup</span></div></li>
+                                    <li><div class="formula-item"><code>=VLOOKUP("social", D1:L8, 2, 0)</code><span>Vertical lookup</span></div></li>
+                                    <li><div class="formula-item"><code>=INDIRECT("Sheet1!A2")</code><span>Cell reference</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>Data Analysis</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=SORT(campaign_performance,3,FALSE,2,TRUE,6,FALSE)</code><span>Multi-column sort</span></div></li>
+                                    <li><div class="formula-item"><code>=FILTER(A3:U13, condition)</code><span>Filter data by criteria</span></div></li>
+                                    <li><div class="formula-item"><code>=SUM(mark_spent)/SUM(clicks)</code><span>Custom calculated field in pivot table</span></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="blog-content">
+                    <h2>Table of Contents</h2>
+                    <ul>
+                        <li><a href="#part1">Part 1 – Exploratory Analysis & KPI Overview</a></li>
+                        <li><a href="#part2">Part 2 – Lookup & Reference</a></li>
+                        <li><a href="#part3">Part 3 – Time Series Trends & Insights</a></li>
+                    </ul>
+                </div>
+
+                <!-- Part 1 Content -->
+                <div id="part1" class="blog-content">
+                    <h2>Part 1 – Exploratory Analysis & KPI Overview</h2>
+                    <p><em>Key workflows and tools to explore marketing data using formulas and pivot tables.</em></p>
+                    
+                    <p>When receiving a dataset, the first step is to get a good understanding of it: time frames, ranges, trends, etc.</p>
+                
+                    <p>Common methods include:</p>
+                    <p>Functions:</p>
+                    <ul>
+                        <li>max, min</li>
+                        <li>sum, sumif</li>
+                        <li>count, countif</li>
+                        <li>find</li>
+                        <li>left, mid, right</li>
+                        <li>unique</li>
+                        <li>lower</li>
+                    </ul>
+                    <p>Pivot tables</p>
+                    <br />
+                    <p>We'll use an example dataset from Kaggle: 
+                        <a href="https://www.kaggle.com/datasets/sinderpreet/analyze-the-marketing-spending" target="_blank">
+                            Digital Marketing Metrics & KPIs to Measure (SQL)
+                        </a>
+                    </p>
+                    <p><em>Kaggle is a platform rich in machine learning resources, including datasets and pre-built models for reference.</em></p>
+                    <p>Functions used in this article are applicable to Excel as well.</p>
+                    <br />
+                    <p>After downloading and unzipping the file, paste the data to Google Sheets.</p>
+                    <img src="../img/mkt-dsah/col-list.png" alt="Column list">
+                
+                    <h3>Min, Max</h3>
+                    <p>First, use the <code>MIN</code> and <code>MAX</code> functions to check the minimum and maximum values of numeric fields such as impressions, spent, clicks, leads, orders, and revenue. It can also be used to check the date range.</p>
+                    <p>Copy the headers to a new sheet and use rows 2 and 3 to show the minimum and maximum values respectively</p>
+                    <img src="../img/mkt-dsah/min-max.png" alt="Min and max formulas">
+                
+                    <p>Use <code>=MIN(Sheet1!B:B)</code> to find the minumum (earliest) date in column B of Sheet1. For the maximum date (cell B3), simply replace <code>MIN</code> with <code>MAX</code>: <code>=MAX(Sheet1!B:B)</code></p>
+                
+                    <p>The same logic applies to other numeric columns — just change the target column accordingly.</p>
+                    <p>In terms of formatting, set the date column to "Date" via Format → Number → Date from the toolbar on the top. Use standard number format with comma separators for better readability.</p>
+                    <p>Then we can see the data is about digital marketing performance in February 2021. Metrics ranges are wide, possibly due to results from different campaign types.</p>
+                
+                    <h3>Sumif, Countif</h3>
+                    <p>To further explore the dataset using <code>campaign_name</code> and <code>category</code>, we first need to organize data.</p>
+                
+                    <p><code>campaign_name</code> field includes platform names — Facebook, Instagram, Google, YouTube, etc. And that can be extracted for further analysis.</p>
+                    <p>The structure of campaign name looks like <code>platform + underscore + campaign type</code>. Use <code>FIND</code> and <code>LEFT</code> to identify the underscore and extract the platform name:</p>
+                    <pre><code>=LEFT(C2, FIND("_", C2) - 1)</code></pre>
+                
+                    <p>Use <code>LOWER</code> to make all text lowercase (standardize):</p>
+                    <pre><code>=LOWER(LEFT(C2, FIND("_", C2) - 1))</code></pre>
+                    <p>Or use a seperate column for clarity:</p>
+                    <pre><code>=LOWER(L2)</code></pre>
+                
+                    <img src="../img/mkt-dsah/platform.png" alt="Extracting platform names">
+                
+                    <p>Now we can aggregate data by <strong>category</strong> and <strong>platform</strong>.</p>
+                
+                    <p>In a new sheet, get an unique list of categories by setting:</p>
+                    <pre><code>=UNIQUE(Sheet1!D:D)</code></pre>
+                    <img src="../img/mkt-dsah/unique.png" alt="Unique categories">
+                
+                    <p>Use <code>SUMIF</code> to get totals. Example (impressions for "social"):</p>
+                    <pre><code>=SUMIF(Sheet1!$D:$D, $A2, Sheet1!F:F)</code></pre>
+                
+                    <p>Remember to put dollor sign <code>$</code> to lock column/row so that it's easier to drag formula across the sheet.</p>
+                    <img src="../img/mkt-dsah/sumif.png" alt="Sumif example">
+                
+                    <p>Summ one metric for one category and drag the formula across rows and columns to get the full data.</p>
+                    <img src="../img/mkt-dsah/drag.png" alt="Drag formulas to fill table">
+                
+                    <p>Then calculate key metrics:</p>
+                    <ul>
+                        <li>CTR = clicks / impressions</li>
+                        <li>CPC = spend / clicks</li>
+                        <li>CPL = spend / leads</li>
+                        <li>CPA = spend / orders</li>
+                        <li>ROAS = revenue / spend</li>
+                        <li>Average order price</li>
+                    </ul>
+                
+                    <p>Compute percentage of clicks, leads, orders, and revenue per category.</p>
+                    <img src="../img/mkt-dsah/cat-summary.png" alt="Category summary">
+                
+                    <p>Observations:</p>
+                    <ul>
+                        <li>Social and Media bring ~90% of impressions</li>
+                        <li>Leads and orders mostly from Social and Influencer</li>
+                        <li>Influencer channel yields highest ROAS ($2.54); media is second ($1.22)</li>
+                    </ul>
+                
+                    <p>The results overall align with general marketing performance: display/media ads drive exposure while conversions and revenue come from other channels. Consider increasing spend on high-performing channels like Influencer. Monitor performance closely since the margin may go down as spending goes up.</p>
+                
+                    <p>
+                        To dive deeper, analyze platform, campaign, and daily changes. That's covered in the next section.
+                    </p>
+                
+                    <p>Currently, we have four sheets. Give them meaningful names like <code>raw</code>, <code>maxmin</code>, <code>category</code>, and <code>platform</code>.</p>
+                
+                    <p>All of the above can also be done using a pivot table.</p>
+                
+                    <h3>Pivot Table</h3>
+                    <p>In the raw sheet, select the full data range. From the menu, choose <strong>Insert → Pivot Table</strong>.</p>
+                    <img src="../img/mkt-dsah/pivot.png" alt="Insert pivot table">
+                
+                    <p>Use the Pivot Table Editor to build your view.</p>
+                    <img src="../img/mkt-dsah/pivot-edit.png" alt="Pivot editor UI">
+                
+                    <p>Google Sheets supports automatic grouping by category or platform.</p>
+                    <img src="../img/mkt-dsah/pivot-edit2.png" alt="Pivot editor auto group">
+                
+                    <p><strong>Clicks %:</strong> Add <code>clicks</code> twice under Values, then set one to "% of grand total".</p>
+                    <img src="../img/mkt-dsah/click-per.png" alt="Click percentage setup">
+                
+                    <p><strong>CPC:</strong> Add a <em>Calculated Field</em>:</p>
+                    <pre><code>=SUM(mark_spent)/SUM(clicks)</code></pre>
+                    <p>Rename the field to "CPC".</p>
+                    <img src="../img/mkt-dsah/pivot-calc.png" alt="Calculated field CPC">
+                
+                    <p>Setting up a pivot table takes more time initially, but once it's ready, it can be easy to explore different dimensions (category, platform, date, or campaign) and make different versions quickly.</p>
+                </div>
+
+                <!-- Part 2 Content -->
+                <div id="part2" class="blog-content">
+                    <h2>Part 2 – Lookup & Reference</h2>
+                    <p><em>Data retrieval techniques using INDEX+MATCH, VLOOKUP, and INDIRECT.</em></p>
+                    
+                    <p>Continuing from the previous section, this part aims to retrieve:</p>
+                    <ul>
+                        <li>The <strong>category</strong> corresponding to each <strong>platform</strong></li>
+                        <li>The <strong>platform</strong> and <strong>category</strong> for each <strong>campaign</strong></li>
+                    </ul>
+                
+                    <p>We'll use the following functions:</p>
+                    <ul>
+                        <li><code>INDEX + MATCH</code></li>
+                        <li><code>VLOOKUP</code></li>
+                        <li><code>INDIRECT</code></li>
+                    </ul>
+                
+                    <h3>INDEX + MATCH</h3>
+                    <p><code>INDEX</code> with <code>MATCH</code> is a powerful combo. While it may seem complex at first, but it's really flexible once you get the hang of it.</p>
+                
+                    <p>The first argument of <code>INDEX</code> is the column from which you want to retrieve data — in this case, the <code>category</code> column (column D) of the raw data. The second argument is the row number. In this example we put 2 and get the value in cell D2, which is "social". Since this row number will be dynamic, we use <code>MATCH</code> to find it.</p>
+                
+                    <p><code>MATCH</code> needs three arguments:</p>
+                    <ul>
+                        <li><strong>Lookup value</strong>: e.g., values in column A of the <code>platform</code> sheet (facebook, google, youtube, etc.)</li>
+                        <li><strong>Lookup range</strong>: where to search for the value — in this case, column L of the <code>raw</code> sheet (platform)</li>
+                        <li><strong>Match type</strong>: usually 0, which means exact match</li>
+                    </ul>
+                
+                    <p>For example, to find the value of A3 in the platform sheet (which is "facebook"), <code>MATCH</code> searches column L of the raw data and returns the row number of its first appearance, which is 2. This value is then used as the row number in the <code>INDEX</code> function.</p>
+                
+                    <p>So in <code>platform</code> sheet cell B3, our formula looks like this:</p>
+                    <img src="../img/mkt-dsah/indexmatch.png" alt="Index match formula example">
+                
+                    <p>There are two other functions related to referencing values by position: <code>VLOOKUP</code> and <code>INDIRECT</code>. <code>VLOOKUP</code> is more commonly used in practice than <code>INDIRECT</code>. These two are not the best fits for this specific case, though.</p>
+                
+                    <p>The lookup exercises below are mainly for practice, as there's no strict one-to-one relationship between platform and category. A single platform might appear under both "social" and "influencer". In such cases, the first match is returned.</p>
+                
+                    <h3>VLOOKUP</h3>
+                    <p><code>VLOOKUP</code> searches for a value in the first column of a data range and returns a value from a specified column in the same row.</p>
+                
+                    <p>It takes three required arguments:</p>
+                    <ol>
+                        <li>Lookup value</li>
+                        <li>Table range</li>
+                        <li>Column number (to return from)</li>
+                    </ol>
+                    <p>It also has an optional fourth argument for match types: exact (0) or approximate (1). Approximate (1) is the default.</p>
+                
+                    <p>For example, in a blank cell of the <code>raw</code> sheet, set:</p>
+                    <pre><code>=VLOOKUP("social", D1:L8, 2, 0)</code></pre>
+                    <p>This searches column D in the range D1:L8 for the first occurrence of "social" and returns the value in the second column of that row. In this case it's the impressions column.</p>
+                    <img src="../img/mkt-dsah/vlookup.png" alt="VLOOKUP example">
+                
+                    <p>VLOOKUP can only search from left to right. Re-arrange the data before using <code>VLOOKUP</code> if the lookup value isn't in the first column of the specified range, </p>
+                
+                    <p>Although the fourth argument is optional, it's better to match the value precisely. Set it to 0 for exact match. (Default value in both Excel and Google Sheets is <em>approximate</em>)</p>
+                
+                    <p>More on official docs:</p>
+                    <ul>
+                        <li><a href="https://support.microsoft.com/zh-tw/office/vlookup-%E5%87%BD%E6%95%B8-0bbc8083-26fe-4963-8ab8-93a18ad188a1" target="_blank">Excel VLOOKUP</a></li>
+                        <li><a href="https://support.google.com/docs/answer/3093318?hl=en" target="_blank">Google Sheets LOOKUP</a></li>
+                    </ul>
+                
+                    <h3>INDIRECT</h3>
+                    <p><code>INDIRECT</code> takes one required argument, a string representing a cell reference. Like <code>"D2"</code> or <code>"Sheet1!A2"</code>.</p>
+                
+                    <p>It's often used when consolidating data from multiple sheets to a summary sheet. For example, if monthly data is stored in separate sheets (January, February, etc.) and you want to grab them all in a summary sheet, <code>INDIRECT</code> would be very handy.</p>
+                
+                    <p>There's already a great article describing use cases: 
+                        <a href="https://zanzan.tw/archives/4387#%E4%B8%83%E3%80%81SUMIF%E5%87%BD%E6%95%B8%E7%B5%84%E5%90%88%E5%85%AC%E5%BC%8F" target="_blank">SUMIF combined with INDIRECT (by Zanzan)</a>.
+                    </p>
+                </div>
+
+                <!-- Part 3 Content -->
+                <div id="part3" class="blog-content">
+                    <h2>Part 3 – Time Series Trends & Insights</h2>
+                    <p><em>Visualizing time series trends and extracting insights using filters and named ranges.</em></p>
+                    
+                    <p>We'll finish up analyzing data by using methods from the previous sections and adding two more.</p>
+                
+                    <h4>Functions:</h4>
+                    <ul>
+                        <li>text</li>
+                        <li>weekday</li>
+                    </ul>
+                
+                    <h3>Chart Setup</h3>
+                    <p>Freeze top rows so that they stay in place when dragging formulas down.</p>
+                    <img src="../img/mkt-dsah/campaign_perf.png" alt="campaign performance chart">
+                
+                    <p>Add a "Day of Week (DOW)" column to show Mondays, Tuesdays, etc., so that it's easier to see the difference in performance between weekdays and weekends.</p>
+                    <p>Get numbers that represent weekdays from the <code>WEEKDAY</code> function. By default, Sunday is 1 and Saturday is 7, but this can be customized using the second argument.</p>
+                    <a href="https://support.microsoft.com/zh-tw/office/weekday-%E5%87%BD%E6%95%B8-60e44483-2ed1-439f-8bd0-e404c190949a" target="_blank">WEEKDAY function documentation</a>
+
+                    <p>Then, pass results to the <code>TEXT</code> function to get text values like "Monday" or "Mon". <code>TEXT</code> takes two arguments: target value and format. Common formats for dates are <code>"dddd"</code> (e.g., Monday) and <code>"ddd"</code> (e.g., Mon).</p>
+                    <a href="https://support.microsoft.com/zh-tw/office/text-%E5%87%BD%E6%95%B8-20d5ac4d-7b94-49fd-bb38-93d29371225c" target="_blank">TEXT function documentation</a>
+                    <div><img src="../img/mkt-dsah/weekday.png" alt="weekday function example"></div>
+                
+                    <p>We can see that there is no significant difference between weekdays (Mon-Fri) and weekends (Sat-Sun) performance. Instead, Fridays and Saturdays account for the most orders.</p>
+                    <img src="../img/mkt-dsah/weekend.png" alt="weekend orders chart">
+                    <img src="../img/mkt-dsah/week.png" alt="weekday orders chart">
+                
+                    <p>Let's visualize daily performance trends using Combo Charts. We'll create three charts:</p>
+                    <ul>
+                        <li>Clicks (bar) + CPC (line)</li>
+                        <li>Impressions (bar) + CTR (line)</li>
+                        <li>Marketing Spend (bar) + ROAS (line)</li>
+                    </ul>
+                
+                    <p>Start with Clicks + CPC. Go to <strong>Insert → Chart</strong>, select <strong>Combo Chart</strong> in the Chart Editor. Set the Data Range to include <code>c_date (A)</code>, <code>clicks (E)</code>, and <code>CPC (G)</code>.</p>
+                    <img src="../img/mkt-dsah/combo.png" alt="combo chart setup">
+                    <p>Add <code>c_date</code> to X-axis, and both <code>clicks</code> and <code>CPC</code> to Series. Then go to <strong>Customize → Series</strong> and set <code>CPC</code> to the right axis.</p>
+                    <img src="../img/mkt-dsah/combo_right_axis.png" alt="right axis setting">
+                
+                    <p>Observations:</p>
+                    <p>Clicks and spending peaked around mid-month (Feb 10–20). On Feb 18, impressions spiked but spend decreased. This could be due to ad budget being focused around Lunar New Year (Feb 12–16, 2021).</p>
+                    <img src="../img/mkt-dsah/combo_12.png" alt="chart around Feb 12">
+                    <img src="../img/mkt-dsah/combo_3.png" alt="chart showing trends">
+                
+                    <p>Using a pivot table to check traffic sources, we find the ad campaign behind the Feb 18 spike in impressions was <strong>banner_partner</strong>.</p>
+                    <img src="../img/mkt-dsah/banner_partner.png" alt="pivot showing banner_partner">
+                
+                    <p>Other metrics like clicks, spend, and orders did not increase significantly on the same day. It's possible that some camapigns are charged based on <strong>orders</strong> and not <strong>impressions</strong>. It's also noticed that order volumn peaked after impressions spiked (about 2 days after).</p>
+                    <img src="../img/mkt-dsah/banner_partner_daily.png" alt="daily metrics of banner_partner">
+                
+                    <h3>Sorting Issues with Formula Columns</h3>
+                    <p>Columns generated by formulas cannot be sorted directly. There are two ways to revolve it:</p>
+                    <ul>
+                        <li>Named Ranges</li>
+                        <li>Filter (views or functions)</li>
+                    </ul>
+                
+                    <h4><strong>Named Ranges</strong></h4>
+                    <p>Select campaign data (excluding header) and name the range <code>campaign_performance</code>.</p>
+                    <img src="../img/mkt-dsah/named_ranges.png" alt="creating named range">
+                    <p>In a new sheet, enter the following formula in cell A2:</p>
+                    <pre>=sort(campaign_performance,3,FALSE,2,TRUE,6,FALSE)</pre>
+                    <a href="https://support.google.com/docs/answer/3093150?hl=en" target="_blank">SORT function documentation</a>
+                    <img src="../img/mkt-dsah/named_ranges_2.png" alt="sort formula example">
+                
+                    <p>Observations:</p>
+                    <ul>
+                        <li>Most leads and orders came from <strong>influencer</strong> and <strong>social</strong> channels.</li>
+                        <li>Highest average order value: <strong>influencer</strong></li>
+                        <li><strong>Media</strong> provided the most impressions</li>
+                        <li>Top performers (increase budget if possible): <strong>instagram_blogger</strong>, <strong>youtube_blogger</strong></li>
+                        <li>Low ROAS (need optimization) (<strong>$0.1</strong>): <strong>facebook_lal</strong></li>
+                    </ul>
+                
+                    <p>In <strong>search</strong>, both <code>google_hot</code> and <code>google_wide</code> have similar CPA but very different order values, hinting at differences in creatives or copy. Further analysis is needed.</p>
+                
+                    <h4><strong>Filter</strong></h4>
+                    <p>Create filter views or use the <code>FILTER</code> function.</p>
+                
+                    <h5>1. Filter View</h5>
+                    <p>Create a filter view and set the sort order for the desired column.</p>
+                    <img src="../img/mkt-dsah/filter_1.png" alt="create filter view">
+                    <img src="../img/mkt-dsah/filter_2.png" alt="filtered by category">
+                
+                    <h5>2. FILTER Function</h5>
+                    <p>Call the filter function, select the data range (A3:U13) and set the filter condition.</p>
+                    <img src="../img/mkt-dsah/filter.png" alt="filter example">
+                    <img src="../img/mkt-dsah/filter1.png" alt="filter with one condition">
+                    <img src="../img/mkt-dsah/filter2.png" alt="filter with multiple conditions">
+                    <p>More resources about filter:</p>
+                    <ul>
+                        <li><a href="https://support.google.com/docs/answer/3093197?hl=en" target="_blank">Google Sheets FILTER function</a></li>
+                        <li><a href="https://support.microsoft.com/zh-tw/office/filter-%E5%87%BD%E6%95%B8-f4f7cb66-82eb-4767-8f7c-4877ad80c759" target="_blank">Excel FILTER function</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=KS60-3E2DEI" target="_blank">Cross-sheet example by Meiko</a></li>
+                    </ul>
+                
+                    <h2>Summary</h2>
+                    <p>We used several practical features and functions to analyze marketing data:</p>
+                    <ul>
+                        <li>Charts & Pivot Tables</li>
+                        <li>Text Processing: <code>left</code>, <code>mid</code>, <code>right</code>, <code>lower</code>, <code>find</code>, <code>unique</code>, <code>text</code></li>
+                        <li>Date & Numbers: <code>max</code>, <code>min</code>, <code>weekday</code></li>
+                        <li>Conditional Calculations: <code>sum</code>, <code>sumif</code>, <code>count</code>, <code>countif</code></li>
+                        <li>Reference/Matching: <code>vlookup</code>, <code>indirect</code>, <code>index</code> + <code>match</code></li>
+                    </ul>
+                
+                    <p>The process starts with organizing data, follows by conditional calculations, and ends with campaign performance evaluation. Similar steps can be applied to other datasets.</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <footer id="footer"></footer>
+    <script src="../script.js"></script>
+</body>
+</html>

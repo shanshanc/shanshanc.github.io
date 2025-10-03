@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets 行銷數據儀表板 | Shanshan Chen</title>
+    <meta name="description" content="使用 Google Sheets 公式、樞紐分析表和視覺化技術，將原始行銷活動數據轉化為可操作洞察的完整指南。">
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" href="./reset.css">
+    <link type="text/css" rel="stylesheet" href="./styles.css">
+    <link rel="icon" href="../img/favicon_s.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header id="header"></header>
+
+    <main>
+        <div class="content">
+            <article class="blog-post">
+                <div class="blog-header">
+                    <h1>Google Sheets 行銷數據儀表板</h1>
+                    <div class="meta-item">
+                        <span class="meta-label">
+                            <a href="https://docs.google.com/spreadsheets/d/1g9wdislk8hSq0Qp3VCmCv6p-f4CZymKOFaoxRXc0ueI/edit?usp=sharing" target="_blank">範例 Google Sheet</a>
+                        </span>
+                        <span class="meta-label">
+                            <a href="../articles.html">← 返回文章列表</a>
+                        </span>
+                        <span class="meta-label">語言版本:
+                            <a href="./mktg-dahboard.html">EN</a>
+                        </span>
+                    </div>
+                    <p class="blog-description">利用 Excel 或 Google Sheets 公式、樞紐分析表和視覺化方法，將行銷活動數據轉化為容易採取行動的洞察報表，拆分為三個步驟</p>
+                    
+                    <!-- Formula Reference -->
+                    <div class="formula-reference">
+                        <h3>快速公式參考</h3>
+                        <p>本篇使用到的公式，在一般在資料分析也很常用：</p>
+                        <div class="formula-grid">
+                            <div class="formula-category">
+                                <h4>數據探索</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=MIN(Sheet1!B:B)</code><span>找最小數值</span></div></li>
+                                    <li><div class="formula-item"><code>=MAX(Sheet1!B:B)</code><span>找最大數值</span></div></li>
+                                    <li><div class="formula-item"><code>=UNIQUE(Sheet1!D:D)</code><span>取得不重複清單</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>文字處理</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=LEFT(C2, FIND("_", C2) - 1)</code><span>取得從左邊算起第幾個字元 (搭配FIND使用)</span></div></li>
+                                    <li><div class="formula-item"><code>=LOWER(L2)</code><span>英文字轉為小寫</span></div></li>
+                                    <li><div class="formula-item"><code>=TEXT(date, "dddd")</code><span>格式化日期 (以取得完整星期名稱)</span></div></li>
+                                    <li><div class="formula-item"><code>=WEEKDAY(date)</code><span>取得星期數字 (1-7，預設周日是1)</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>條件計算</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=SUMIF(Sheet1!$D:$D, $A2, Sheet1!F:F)</code><span>依類別加總</span></div></li>
+                                    <li><div class="formula-item"><code>=COUNTIF(range, criteria)</code><span>依類別計次</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>查找與參照</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=INDEX(D:D, MATCH(A3, L:L, 0))</code><span>依據指定鍵值找對應值</span></div></li>
+                                    <li><div class="formula-item"><code>=VLOOKUP("social", D1:L8, 2, 0)</code><span>垂直查找</span></div></li>
+                                    <li><div class="formula-item"><code>=INDIRECT("Sheet1!A2")</code><span>動態儲存格參照</span></div></li>
+                                </ul>
+                            </div>
+                            <div class="formula-category">
+                                <h4>數據分析</h4>
+                                <ul>
+                                    <li><div class="formula-item"><code>=SORT(campaign_performance,3,FALSE,2,TRUE,6,FALSE)</code><span>多欄排序</span></div></li>
+                                    <li><div class="formula-item"><code>=FILTER(A3:U13, condition)</code><span>依條件篩選</span></div></li>
+                                    <li><div class="formula-item"><code>=SUM(mark_spent)/SUM(clicks)</code><span>樞紐分析表自訂計算欄位</span></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="blog-content">
+                    <h2>目錄</h2>
+                    <ul>
+                        <li><a href="#part1">第一部分 – 資料探索與 KPI 總覽</a></li>
+                        <li><a href="#part2">第二部分 – 尋找和比對</a></li>
+                        <li><a href="#part3">第三部分 – 時間序列趨勢與洞察</a></li>
+                    </ul>
+                </div>
+
+                <!-- Part 1 Content -->
+                <div id="part1" class="blog-content">
+                    <h2>第一部分 – 資料探索與 KPI 總覽</h2>
+                    <p><em>利用 Excel / Google Sheets 公式和樞紐分析表探索數據</em></p>
+                    
+                    <p>拿到資料的第一件事是先進行初步了解：區間、範圍、趨勢</p>
+                
+                    <p>常用的方法有：</p>
+                    <p>函式：</p>
+                    <ul>
+                        <li>max, min</li>
+                        <li>sum, sumif</li>
+                        <li>count, countif</li>
+                        <li>find</li>
+                        <li>left, mid, right</li>
+                        <li>unique</li>
+                        <li>lower</li>
+                    </ul>
+                    <p>樞紐分析表</p>
+                    <br />
+                    <p>這次使用的是從 Kaggle 下載的資料集：
+                        <a href="https://www.kaggle.com/datasets/sinderpreet/analyze-the-marketing-spending" target="_blank">
+                            Digital Marketing Metrics & KPIs to Measure (SQL)
+                        </a>
+                    </p>
+                    <p><em>Kaggle 是一個有很多 Machine Learning 資源的平台，除了資料集之外，也有寫好的 models 可以參考。</em></p>
+                    <p>本篇使用到的函式在 Excel 和 Google Sheet 都是通用的</p>
+                    <br />
+                    <p>下載檔解壓縮之後把資料貼到 Google Sheet。</p>
+                    <img src="../img/mkt-dsah/col-list.png" alt="欄位列表">
+                
+                    <h3>Min, Max</h3>
+                    <p>首先用 <code>MIN</code> 和 <code>MAX</code> 函式，查看數值型資料如 impressions、spent、clicks、leads、orders、revenue 的最大跟最小值。也可以用來查看日期範圍。</p>
+                    <p>複製表頭到新分頁，第2、3列分別表示最小值和最大值。</p>
+                    <img src="../img/mkt-dsah/min-max.png" alt="最小值最大值公式">
+                
+                    <p>例如說找日期的最小值，可在 (B2) 儲存格輸入 <code>=MIN(Sheet1!B:B)</code>，就可得到 Sheet1 B 欄的最小值。日期的最大值 (B3)，範圍一樣，把 min 換成 max 即可：<code>=MAX(Sheet1!B:B)</code></p>
+                
+                    <p>同樣的邏輯適用於其他數值欄位，只要修改目標欄位。</p>
+                    <p>資料格式調整 (以日期為): 從工具列找到 Format → Number → Date ，設定為「日期」格式。可用逗號分隔的標準數字格式，提高可讀性。</p>
+                    <p>可以看出資料是關於 2021 年 2 月份的數位行銷成效。變化幅度蠻大的，可能是不同廣告活動類型的差異。</p>
+                
+                    <h3>Sumif, Countif</h3>
+                    <p>從 <code>campaign_name</code> 和 <code>category</code> 進一步探索資料集，不過…在那之前需要加工一下。</p>
+                
+                    <p><code>campaign_name</code> 欄位包含了平台名稱 — Facebook、Instagram、Google、YouTube 等 — 截取平台名稱進行分析。</p>
+                    <p>觀察結構: <code>平台 + 底線 + 廣告活動類型</code>，所以可以先定位底線再區隔左右。使用 <code>FIND</code> 和 <code>LEFT</code> 截取平台名稱：</p>
+                    <pre><code>=LEFT(C2, FIND("_", C2) - 1)</code></pre>
+                
+                    <p>再用 <code>LOWER</code> 把名稱都轉小寫：</p>
+                    <pre><code>=LOWER(LEFT(C2, FIND("_", C2) - 1))</code></pre>
+                    <p>可全都寫在同一個儲存格，或者為了清楚起見使用 M 欄：</p>
+                    <pre><code>=LOWER(L2)</code></pre>
+                
+                    <img src="../img/mkt-dsah/platform.png" alt="取得平台名稱">
+                    <p><em>補充: 有小寫函式當然有其他大小寫轉換的函式，例如: <a target="_blank" href="https://support.google.com/docs/answer/3094219?">UPPER</a> 轉大寫，<a target="_blank" href="https://support.google.com/docs/answer/3094220?">PROPER</a> 首字大寫</em></p>
+                    <br />
+                    <p>接著就可以依照 <strong>category</strong> 和 <strong>platform</strong> 彙總數據。</p>
+                
+                    <p>先從 categories 開始，列出不重複的category清單，在新分頁中設定：</p>
+                    <pre><code>=UNIQUE(Sheet1!D:D)</code></pre>
+                    <img src="../img/mkt-dsah/unique.png" alt="唯一類別">
+                
+                    <p><code>SUMIF</code> 依據catogory 加總。例如（"social" 的 impressions）：</p>
+                    <pre><code>=SUMIF(Sheet1!$D:$D, $A2, Sheet1!F:F)</code></pre>
+                
+                    <p>記得在拖曳公式時使用 <code>$</code> 符號來鎖定參照的儲存格、欄、或是列。</p>
+                    <img src="../img/mkt-dsah/sumif.png" alt="Sumif 範例">
+                
+                    <p>完成所有類別和指標的加總後，將公式拖曳到所有欄位。</p>
+                    <img src="../img/mkt-dsah/drag.png" alt="拖曳公式填滿表格">
+                
+                    <p>接著計算重要的數值指標：</p>
+                    <ul>
+                        <li>CTR = clicks / impressions</li>
+                        <li>CPC = spend / clicks</li>
+                        <li>CPL = spend / leads</li>
+                        <li>CPA = spend / orders</li>
+                        <li>ROAS = revenue / spend</li>
+                        <li>平均訂單價格</li>
+                    </ul>
+                
+                    <p>也計算每個類別的 clicks、leads、orders 和 revenue 佔比。</p>
+                    <img src="../img/mkt-dsah/cat-summary.png" alt="類別摘要">
+                
+                    <p>觀察：</p>
+                    <ul>
+                        <li>Social 和 Media 帶來約 90% 的曝光</li>
+                        <li>Leads 和訂單主要來自 Social 和 Influencer</li>
+                        <li>Influencer 渠道產生最高 ROAS ($2.54)</li>
+                        <li>Media 排第二 ($1.22)，低了 $1.32</li>
+                    </ul>
+                
+                    <p>這符合一般行銷表現：display/media 廣告帶來曝光；其他渠道帶來轉換和收入。可以考慮增加在表現較佳的渠道如 Influencer 的預算。</p>
+                
+                    <p>如果要進一步分析，需要分析平台、廣告活動和每日變化。但目前還不知道每個廣告活動的類別。雖然可以手動檢查，但更好的方法是使用參照表 — 在第二個部分會有更多說明。
+                    </p>
+                
+                    <p>修改四個工作表名稱。給它們有意義的名稱比較容易讀，如 <code>raw</code>、<code>maxmin</code>、<code>category</code> 和 <code>platform</code>。</p>
+                
+                    <p>以上所有內容也可以用樞紐分析表完成。</p>
+                
+                    <h3>樞紐分析表</h3>
+                    <p>在原始資料工作表中，選取全部資料範圍。從選單中選擇 <strong>Insert → Pivot Table</strong>。</p>
+                    <img src="../img/mkt-dsah/pivot.png" alt="插入樞紐分析表">
+                
+                    <p>用樞紐分析表編輯器來建立檢視。</p>
+                    <img src="../img/mkt-dsah/pivot-edit.png" alt="樞紐編輯器 UI">
+                
+                    <p>Google Sheets 支援自動分組。</p>
+                    <img src="../img/mkt-dsah/pivot-edit2.png" alt="樞紐編輯器自動分組">
+                
+                    <p><strong> clicks % 計算：</strong>在 Values 下新增兩次 <code>clicks</code>，然後將其中一個設定為「% of grand total」。</p>
+                    <img src="../img/mkt-dsah/click-per.png" alt="點擊百分比設定">
+                
+                    <p><strong>CPC 計算：</strong>新增一個<em>計算欄位</em>：</p>
+                    <pre><code>=SUM(mark_spent)/SUM(clicks)</code></pre>
+                    <p>將欄位重新命名為「CPC」。</p>
+                    <img src="../img/mkt-dsah/pivot-calc.png" alt="計算欄位 CPC">
+                
+                    <p>ps: 設定樞紐分析表一開始需要更多時間，但是一旦準備好，就很容易探索不同維度 (依類別、平台、日期或廣告活動) 並快速建立不同版本。</p>
+                </div>
+
+                <!-- Part 2 Content -->
+                <div id="part2" class="blog-content">
+                    <h2>第二部分 – 尋找和比對</h2>
+                    <p><em>使用 INDEX+MATCH、VLOOKUP 和 INDIRECT 的數據檢索技術。</em></p>
+                    
+                    <p>接續上一段的例子，這個小節的目的是拿到：</p>
+                    <ul>
+                        <li>platform 對應的 category</li>
+                        <li>campaign的 platform 和 category</li>
+                    </ul>
+                
+                    <p>需要很多比對，將使用以下函式：</p>
+                    <ul>
+                        <li><code>INDEX + MATCH</code></li>
+                        <li><code>VLOOKUP</code></li>
+                        <li><code>INDIRECT</code></li>
+                    </ul>
+                
+                    <h3>INDEX + MATCH</h3>
+                    <p><code>INDEX</code> 搭配 <code>MATCH</code> 是個很有彈性且功能強大的組合。一開始可能會覺得看起來很複雜，但拆解並多試用幾次之後，就能感受到它是一種很棒的輔助工具。</p>
+                
+                    <p><a target="_blank" href="https://support.google.com/docs/answer/3098242?hl=en">INDEX</a> 使用方式: <code>INDEX(reference, [row], [column])</code></p>
+                    <p><code>INDEX</code> 的第一個引數用來指定，想要拿回來的資料欄位，就是範例資料的 <code>category</code> 欄位（D 欄）。<code>INDEX</code> 的第二個引數是目標列的位置，用數字表示，例如傳入 2 就會得到原始 D2 儲存格的值「social」。但因為我們需要的列數會是動態的，因此用 <code>MATCH</code> 來找。</p>
+                
+                    <p><code>MATCH</code> 需要 3 個引數 (<a target="_blank" href="https://support.google.com/docs/answer/3093378">MATCH</a> 使用方法)：</p>
+                    <ul>
+                        <li><strong>要尋找的值</strong>：例如 <code>platform</code> 工作表 A 欄的值（facebook、google、youtube 等）</li>
+                        <li><strong>搜尋範圍</strong>：被搜尋值的位置 — 在此例中是 <code>raw</code> 工作表的 L 欄（platform）</li>
+                        <li><strong>比對類型</strong>：通常是 0，表示完全符合</li>
+                    </ul>
+                
+                    <p>例如，要在 platform 工作表中找到 A3 的值（即「facebook」），<code>MATCH</code> 搜尋原始資料的 L 欄並回傳第一個找到列數 2。這個值接著丟給 <code>INDEX</code> 函式當列數。</p>
+                
+                    <p>所以在 <code>platform</code> 工作表的 B3 儲存格，我們的公式如下：</p>
+                    <img src="../img/mkt-dsah/indexmatch.png" alt="Index match 公式範例">
+                
+                    <p>另外兩個跟位置參照有關，但不適用在本例的函式是 <code>VLOOKUP</code> 和 <code>INDIRECT</code>，實務上 <code>VLOOKUP</code> 又比 <code>INDIRECT</code> 常用。</p>
+                
+                    <p>以下只是用來練習 <code>VLOOKUP</code> 和 <code>INDIRECT</code> 函式，因為其實 platform 和 category 沒有嚴格的一對一關係。如果有某個 platform 同時出現在 social 和 influencer，比對的時候只會拿到第一個符合的值，如果要的是全部清單需要其他的預處理。</p>
+                
+                    <h3>VLOOKUP</h3>
+                    <p><code>VLOOKUP</code> 在資料範圍的第一欄中搜尋值，並從同一列的指定欄中回傳值。和 index + match 很像，只是 index + match 方向沒有限制，而 vlookup 有方向性，只能從左到右，用來比對的鍵值要在第一欄。</p>
+                
+                    <p>需要三個必要引數：</p>
+                    <ol>
+                        <li>查找值</li>
+                        <li>表格範圍</li>
+                        <li>欄號（要回傳的）</li>
+                    </ol>
+                    <p>另外有一個選填的第四個引數，用於比對類型：完全比對（0）或近似比對（1），預設是 1 (近似比對)。</p>
+                
+                    <p>例如，在 <code>raw</code> 工作表的空白儲存格中設定：</p>
+                    <pre><code>=VLOOKUP("social", D1:L8, 2, 0)</code></pre>
+                    <p>這會在範圍 D1:L8 的 D 欄中搜出第一筆符合「social」的列數，並回傳該列第二欄的值，在此例中是第 2 列的 impressions。</p>
+                    <img src="../img/mkt-dsah/vlookup.png" alt="VLOOKUP 範例">
+                
+                    <p>如果尋找值不在範圍的第一欄中，在使用 <code>VLOOKUP</code> 之前需要重新排列資料，把鍵值放到第一欄。</p>
+                
+                    <p>雖然第四個引數是選填，但使用完全比對會更精確。Excel 和 Google Sheets 的預設值都是<em>近似比對</em>，沒有指定可能會得到預期外的結果。</p>
+                
+                    <p>更多官方文件：</p>
+                    <ul>
+                        <li><a href="https://support.microsoft.com/zh-tw/office/vlookup-%E5%87%BD%E6%95%B8-0bbc8083-26fe-4963-8ab8-93a18ad188a1" target="_blank">Excel VLOOKUP</a></li>
+                        <li><a href="https://support.google.com/docs/answer/3093318?hl=zh-Hant" target="_blank">Google Sheets LOOKUP</a></li>
+                    </ul>
+                
+                    <h3>INDIRECT</h3>
+                    <p><code>INDIRECT</code> 需要一個必要引數 — 代表儲存格參照的字串，如 <code>"D2"</code> 或 <code>"Sheet1!A2"</code>。</p>
+                
+                    <p>INDRECT 常用於將多個工作表的資料整合到一個摘要工作表的情境。例如，每個月的資料分別儲存在不同的工作表中（一月、二月等），而想要整合到同一張摘要工作表時，<code>INDIRECT</code> 會很適合。</p>
+                
+                    <p>已經有大大分享使用情境的文章：
+                        <a href="https://zanzan.tw/archives/4387#%E4%B8%83%E3%80%81SUMIF%E5%87%BD%E6%95%B8%E7%B5%84%E5%90%88%E5%85%AC%E5%BC%8F" target="_blank">SUMIF 結合 INDIRECT（by Zanzan）</a>。
+                    </p>
+                </div>
+
+                <!-- Part 3 Content -->
+                <div id="part3" class="blog-content">
+                    <h2>第三部分 – 時間序列趨勢與洞察</h2>
+                    <p><em>使用篩選器和命名範圍視覺化時間序列趨勢並提取洞察。</em></p>
+                    
+                    <p>接著先前的方法，將完成依照 <code>campaign_name</code> 和 <code>c_date</code> 的資料整理。</p>
+                
+                    <h4>函式：</h4>
+                    <ul>
+                        <li>text</li>
+                        <li>weekday</li>
+                    </ul>
+                
+                    <h3>圖表設定</h3>
+                    <p>首先固定表頭，這樣在拖曳資料時它們會保持在原位。</p>
+                    <img src="../img/mkt-dsah/campaign_perf.png" alt="廣告活動成效圖表">
+                
+                    <p>新增一個星期（DOW）欄位來識別週一、週二等，以便分析平日和週末之間的表現。</p>
+                    <p>從 <code>WEEKDAY</code> 函式取得代表星期幾的數字。預設情況下，週日是 1，週六是 7，但可以使用第二個引數自訂。</p>
+                    <a href="https://support.microsoft.com/zh-tw/office/weekday-%E5%87%BD%E6%95%B8-60e44483-2ed1-439f-8bd0-e404c190949a" target="_blank">WEEKDAY 函式文件</a>
+
+                    <p>然後將結果傳遞給 <code>TEXT</code> 函式以取得如「Monday」或「Mon」的文字值。<code>TEXT</code> 需要兩個引數：目標值和格式。日期的常見格式有 <code>"dddd"</code>（例如 Monday）和 <code>"ddd"</code>（例如 Mon）。</p>
+                    <a href="https://support.microsoft.com/zh-tw/office/text-%E5%87%BD%E6%95%B8-20d5ac4d-7b94-49fd-bb38-93d29371225c" target="_blank">TEXT 函式文件</a>
+                    <div><img src="../img/mkt-dsah/weekday.png" alt="weekday 函式範例"></div>
+                
+                    <p>可以看到平日和週末表現沒有顯著差異。週五和週六的訂單最多。</p>
+                    <img src="../img/mkt-dsah/weekend.png" alt="週末訂單圖表">
+                    <img src="../img/mkt-dsah/week.png" alt="平日訂單圖表">
+                
+                    <p>接著使用組合圖表來視覺化每日表現趨勢。建立三個圖表：</p>
+                    <ul>
+                        <li>Clicks（長條圖）+ CPC（折線圖）</li>
+                        <li>Impressions（長條圖）+ CTR（折線圖）</li>
+                        <li>Marketing Spend（長條圖）+ ROAS（折線圖）</li>
+                    </ul>
+                
+                    <p>從 Clicks + CPC 開始。前往 <strong>Insert → Chart</strong>，在圖表編輯器中選擇 <strong>Combo Chart</strong>。將資料範圍設定為包含 <code>c_date (A)</code>、<code>clicks (E)</code> 和 <code>CPC (G)</code>。</p>
+                    <img src="../img/mkt-dsah/combo.png" alt="組合圖表設定">
+                    <p>將 <code>c_date</code> 新增到 X 軸，將 <code>clicks</code> 和 <code>CPC</code> 都新增到系列。然後前往 <strong>Customize → Series</strong> 並將 <code>CPC</code> 設定到右軸。</p>
+                    <img src="../img/mkt-dsah/combo_right_axis.png" alt="右軸設定">
+                
+                    <p>觀察：</p>
+                    <p>Clicks 和支出在月中（2/10 - 2/20）達到高峰。在 2 月 18 日，impressions 激增但支出減少。這可能是由於廣告預算集中在農曆新年期間（2021 年 2 月 12-16 日）。</p>
+                    <img src="../img/mkt-dsah/combo_12.png" alt="2 月 12 日左右的圖表">
+                    <img src="../img/mkt-dsah/combo_3.png" alt="顯示趨勢的圖表">
+                
+                    <p>使用樞紐分析表檢查流量來源，我們發現 2 月 18 日 有大量的impressions 來自 <strong>banner_partner</strong> 廣告活動。</p>
+                    <img src="../img/mkt-dsah/banner_partner.png" alt="顯示 banner_partner 的樞紐表">
+                
+                    <p>其他指標如 clicks、spend 和 orders 在同一天沒有顯著增加。判斷可能是以 <strong>orders</strong> 而非 <strong>impressions</strong> 計價。也注意到訂單量在 impressions 增加後 2 天達到高峰。</p>
+                    <img src="../img/mkt-dsah/banner_partner_daily.png" alt="banner_partner 的每日指標">
+                
+                    <h3>公式欄位的排序問題</h3>
+                    <p>這時如果想要排序，可能會注意到由公式產生的欄位無法直接排序，這樣會讓分析變得困難。有兩種解決方案：</p>
+                    <ul>
+                        <li>命名範圍</li>
+                        <li>篩選器（檢視或函式）</li>
+                    </ul>
+                
+                    <h4><strong>命名範圍</strong></h4>
+                    <p>選取廣告活動資料（不包括標題）並將範圍命名為 <code>campaign_performance</code>。</p>
+                    <img src="../img/mkt-dsah/named_ranges.png" alt="建立命名範圍">
+                    <p>在新工作表的 A2 儲存格中輸入以下公式：</p>
+                    <pre>=sort(campaign_performance,3,FALSE,2,TRUE,6,FALSE)</pre>
+                    <a href="https://support.google.com/docs/answer/3093150?hl=zh-TW" target="_blank">SORT 函式文件</a>
+                    <img src="../img/mkt-dsah/named_ranges_2.png" alt="排序公式範例">
+                
+                    <p>觀察：</p>
+                    <ul>
+                        <li>大部分 leads 和訂單來自 <strong>influencer</strong> 和 <strong>social</strong> 渠道。</li>
+                        <li>最高平均訂單價值：<strong>influencer</strong></li>
+                        <li><strong>Media</strong> 提供最多 impressions</li>
+                        <li>最佳表現（如果可能增加預算）：<strong>instagram_blogger</strong>、<strong>youtube_blogger</strong></li>
+                        <li>低 ROAS（需要優化）（<strong>$0.1</strong>）：<strong>facebook_lal</strong></li>
+                    </ul>
+                
+                    <p>在 <strong>search</strong> 中，<code>google_hot</code> 和 <code>google_wide</code> 有相似的 CPA 但訂單價值差異很大，有可能是文案或素材差異，需要進一步分析。</p>
+                
+                    <h4><strong>篩選器</strong></h4>
+                    <p>資料很多的時候，可能需要篩選資料分開檢視，有兩種常見方法：</p>
+                
+                    <h5>1. 篩選檢視</h5>
+                    <p>建立篩選檢視並為所需欄位設定排序順序。</p>
+                    <img src="../img/mkt-dsah/filter_1.png" alt="建立篩選檢視">
+                    <img src="../img/mkt-dsah/filter_2.png" alt="依類別篩選">
+                
+                    <h5>2. FILTER 函式</h5>
+                    <p>呼叫篩選函式，選擇資料範圍（A3:U13）並設定篩選條件。</p>
+                    <img src="../img/mkt-dsah/filter.png" alt="篩選範例">
+                    <img src="../img/mkt-dsah/filter1.png" alt="單一條件篩選">
+                    <img src="../img/mkt-dsah/filter2.png" alt="多條件篩選">
+                    <p>參考以下資源獲取更多資訊：</p>
+                    <ul>
+                        <li><a href="https://support.google.com/docs/answer/3093197?hl=zh-TW" target="_blank">Google Sheets FILTER 函式</a></li>
+                        <li><a href="https://support.microsoft.com/zh-tw/office/filter-%E5%87%BD%E6%95%B8-f4f7cb66-82eb-4767-8f7c-4877ad80c759" target="_blank">Excel FILTER 函式</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=KS60-3E2DEI" target="_blank">跨工作表範例 by Meiko</a></li>
+                    </ul>
+                
+                    <h2>總結</h2>
+                    <p>在這個系列中使用了以下功能和函式：</p>
+                    <ul>
+                        <li>圖表與樞紐分析表</li>
+                        <li>文字處理：<code>left</code>、<code>mid</code>、<code>right</code>、<code>lower</code>、<code>find</code>、<code>unique</code>、<code>text</code></li>
+                        <li>日期與數字：<code>max</code>、<code>min</code>、<code>weekday</code></li>
+                        <li>條件計算：<code>sum</code>、<code>sumif</code>、<code>count</code>、<code>countif</code></li>
+                        <li>參照/比對：<code>vlookup</code>、<code>indirect</code>、<code>index</code> + <code>match</code></li>
+                    </ul>
+                
+                    <p>從整理資料開始，分類條件計算數據，再進行廣告活動成效評估，這些步驟也可以應用於其他資料集，為下一步行動提供穩估的基礎。</p>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <footer id="footer"></footer>
+    <script src="../script.js"></script>
+</body>
+</html>
