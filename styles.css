@@ -216,6 +216,22 @@ header {
   position: relative;
   z-index: 2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.hero h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.01em;
+  position: relative;
+  z-index: 2;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero p {
@@ -430,6 +446,10 @@ background-color: #CC6699;
 background-color: #8DD6F9;
 }
 
+.skill-item.skill-python {
+background-color: #3776AB;
+}
+
 /* About Section */
 .about {
   max-width: 800px;
@@ -517,6 +537,10 @@ transition: color 0.4s ease, transform 0.4s ease;
 
   .hero h1 {
       font-size: 2rem;
+  }
+
+  .hero h2 {
+      font-size: 1.25rem;
   }
 
   .hero p {
